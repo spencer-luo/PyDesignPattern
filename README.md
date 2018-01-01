@@ -1,8 +1,9 @@
-# DesignPattern
-**English**
+# Description of PyDesignPattern
+
+### English
 This is the source ocde of 《How to comprehend Design Patterns from daily life》。
 
-**中文**
+### 中文
 这是[《如何从生活中领悟设计模式》](http://gitbook.cn/gitchat/column/5a1c24de28554541fbc8f2e8)系列课程的源码，会在写作的过程中持续更新源码内容。
 
 设计模式（Design pattern）是一套被反复使用、多数人知晓的、无数工程师实践的代码设计经验的总结，它是面向对象思想的高度提炼和模板化。使用设计模式将会使你的代码具有更高的可重用性，更好的灵活性和可拓展性，更易被人阅读和理解。
