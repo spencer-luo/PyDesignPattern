@@ -12,4 +12,6 @@
 # import pattern.SimpleFactory
 # import pattern.Iterator
 # import pattern.DataTyped
-import pattern.Composite
+# import pattern.Composite
+# import pattern.Filter
+import pattern.Clone
