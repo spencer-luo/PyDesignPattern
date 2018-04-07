@@ -13,5 +13,8 @@
 # import pattern.Iterator
 # import pattern.DataTyped
 # import pattern.Composite
+# import pattern.Clone
+import pattern.Builder
+
+
 # import pattern.Filter
-import pattern.Clone
