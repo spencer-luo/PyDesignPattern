@@ -41,6 +41,7 @@ class Coffeemaker:
 
     @staticmethod
     def makeCoffee(coffeeBean):
+        "通过staticmethod装饰器修饰来定义一个静态方法"
         coffee = None
         if(coffeeBean == "拿铁风味咖啡豆"):
             coffee = CaffeLatte("拿铁咖啡")
