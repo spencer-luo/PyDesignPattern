@@ -14,7 +14,7 @@
 # import pattern.DataTyped
 # import pattern.Composite
 # import pattern.Clone
-import pattern.Builder
-
+# import pattern.Builder
+import pattern.Adapter
 
 # import pattern.Filter
