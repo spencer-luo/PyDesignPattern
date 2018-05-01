@@ -15,6 +15,7 @@
 # import pattern.Composite
 # import pattern.Clone
 # import pattern.Builder
-import pattern.Adapter
+# import pattern.Adapter
+import pattern.Strategy
 
 # import pattern.Filter
