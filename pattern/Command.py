@@ -7,36 +7,27 @@
 from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
-class Chef(metaclass=ABCMeta):
+class Chef():
     "厨师"
 
-    @abstractmethod
-    def cooking(self, originalMaterial):
-        pass
-
-
-class SteamedChef(Chef):
-    "清蒸大厨"
-
-    def cooking(self, originalMaterial):
+    def steamFood(self, originalMaterial):
         print(originalMaterial + "清蒸中...")
         return "清蒸" + originalMaterial
 
-
-class StirFriedChef(Chef):
-    "爆炒大厨"
-
-    def cooking(self, originalMaterial):
+    def stirFriedFood(self, originalMaterial):
         print(originalMaterial + "爆炒中...")
         return "香辣炒" + originalMaterial
-
 
 class Order(metaclass=ABCMeta):
     "订单"
 
-    def __init__(self, originalMaterial):
-        self._chef = None
+    def __init__(self, name, originalMaterial):
+        self._chef = Chef()
+        self._name = name
         self._originalMaterial = originalMaterial
+
+    def getDisplayName(self):
+        return self._name + self._originalMaterial
 
     @abstractmethod
     def processingOrder(self):
@@ -46,12 +37,11 @@ class SteamedOrder(Order):
     "清蒸"
 
     def __init__(self, originalMaterial):
-        super().__init__(originalMaterial)
-        self._chef = SteamedChef()
+        super().__init__("清蒸", originalMaterial)
 
     def processingOrder(self):
         if(self._chef is not None):
-            return self._chef.cooking(self._originalMaterial)
+            return self._chef.steamFood(self._originalMaterial)
         return ""
 
 
@@ -59,12 +49,11 @@ class SpicyOrder(Order):
     "香辣炒"
 
     def __init__(self, originalMaterial):
-        super().__init__(originalMaterial)
-        self._chef = StirFriedChef()
+        super().__init__("香辣炒", originalMaterial)
 
     def processingOrder(self):
         if (self._chef is not None):
-            return self._chef.cooking(self._originalMaterial)
+            return self._chef.stirFriedFood(self._originalMaterial)
         return ""
 
 
@@ -77,10 +66,11 @@ class Waiter:
 
     def receiveOrder(self, order):
         self.__order = order
+        print("服务员" + self.__name + "：您的 " + order.getDisplayName() + " 订单已经收到,请耐心等待")
 
     def placeOrder(self):
         food = self.__order.processingOrder()
-        print(food)
+        print("服务员" + self.__name + "：您的餐 " + food + " 已经准备好，请您慢用!")
 
 
 
@@ -105,11 +95,16 @@ class Waiter:
 #=======================================================================================================================
 
 def testOrder():
-    # o = Order("dd");
-    # o.processingOrder()
-    waiter = Waiter("1号服务员")
-    order = SteamedOrder("大闸蟹")
-    waiter.receiveOrder(order)
+    waiter = Waiter("Anna")
+    steamedOrder = SteamedOrder("大闸蟹")
+    print("客户David：我要一份" + steamedOrder.getDisplayName())
+    waiter.receiveOrder(steamedOrder)
+    waiter.placeOrder()
+    print()
+
+    spicyOrder = SpicyOrder("大闸蟹")
+    print("客户Tony：我要一份" + steamedOrder.getDisplayName())
+    waiter.receiveOrder(spicyOrder)
     waiter.placeOrder()
 
 
