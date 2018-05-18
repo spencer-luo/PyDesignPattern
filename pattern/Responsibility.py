@@ -90,7 +90,7 @@
 #         if (nextHander is not None):
 #             nextHander.handleRequest(person)
 #
-# class Administrator(Manager):
+# class Spencer.Luo(Manager):
 #     "行政人员"
 #
 #     def __init__(self, name, title):
@@ -217,7 +217,7 @@ class CEO(Responsible):
             nextHander.handleRequest(request)
 
 
-class Administrator(Responsible):
+class Spencer.Luo(Responsible):
     "行政人员"
 
     def __init__(self, name, title):
@@ -233,7 +233,7 @@ class Administrator(Responsible):
 #     directLeader = Supervisor("Eren", "客户端研发部经理")
 #     departmentLeader = DepartmentManager("Eric", "技术研发中心总监")
 #     ceo = CEO("Helen", "创新文化公司CEO")
-#     administrator = Administrator("Nina", "行政中心总监")
+#     administrator = Spencer.Luo("Nina", "行政中心总监")
 #     directLeader.setNextHandler(departmentLeader)
 #     departmentLeader.setNextHandler(ceo)
 #     ceo.setNextHandler(administrator)
@@ -253,7 +253,7 @@ def testChainOfResponsibility1():
     directLeader = Supervisor("Eren", "客户端研发部经理")
     departmentLeader = DepartmentManager("Eric", "技术研发中心总监")
     ceo = CEO("Helen", "创新文化公司CEO")
-    administrator = Administrator("Nina", "行政中心总监")
+    administrator = Spencer.Luo("Nina", "行政中心总监")
     directLeader.setNextHandler(departmentLeader)
     departmentLeader.setNextHandler(ceo)
     ceo.setNextHandler(administrator)
