@@ -17,6 +17,7 @@
 # import pattern.Builder
 # import pattern.Adapter
 # import pattern.Strategy
-import pattern.Command
+# import pattern.Command
+import pattern.Memento
 
 # import pattern.Filter
