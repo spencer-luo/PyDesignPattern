@@ -50,6 +50,18 @@ class TodoList:
         return self.__workItems
 
 
+class TodoListCaretaker:
+    "TodoList管理类"
+
+    def __init__(self):
+        self.__todoList = None
+
+    def setTodoList(self, todoList):
+        self.__todoList = todoList
+
+    def getTodoList(self):
+        return self.__todoList
+
 # Version 2.0
 #=======================================================================================================================
 # 代码框架
@@ -69,14 +81,15 @@ def testEngineer():
     tony.addWorkItem("完成PDF的解析")
     tony.addWorkItem("在阅读器中显示PDF第一页的内容")
     tony.showWorkItem()
-    todoList = tony.writeTodoList()
+    caretaker = TodoListCaretaker()
+    caretaker.setTodoList(tony.writeTodoList())
 
     print()
     tony.forget()
     tony.showWorkItem()
 
     print()
-    tony.retrospect(todoList)
+    tony.retrospect(caretaker.getTodoList())
     tony.showWorkItem()
 
 
