@@ -48,7 +48,7 @@ class Coffeemaker:
         elif(coffeeBean == "摩卡风味咖啡豆"):
             coffee = MochaCoffee("摩卡咖啡")
         else:
-            coffee = Coffee()
+            coffee = Coffee("")
         return coffee
 
 
