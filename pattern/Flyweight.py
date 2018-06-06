@@ -1,75 +1,46 @@
 #!/usr/bin/python
 # Authoer: Spencer.Luo
-# Date: 5/27/2018
+# Date: 6/4/2018
 
 # Version 1.0
 #=======================================================================================================================
-class PowerBank:
-    "移动电源"
+import logging
 
-    def __init__(self, serialNum, electricQuantity):
-        self.__serialNum = serialNum
-        self.__electricQuantity = electricQuantity
-        self.__user = ''
+class Pigment:
+    "颜料"
 
-    def getSerialNum(self):
-        return self.__serialNum
+    def __init__(self, color):
+        self.__color = color
+        self.__user = ""
 
-    def getElectricQuantity(self):
-        return self.__electricQuantity
+    def getColor(self):
+        return self.__color
 
     def setUser(self, user):
         self.__user = user
-
-    def getUser(self):
-        return self.__user
+        return self
 
     def showInfo(self):
-        print("序列号:" + str(self.__serialNum) + "  电量:" + str(self.__electricQuantity) + "  使用者:" + self.__user)
+        print(self.__user + str("取得") + self.__color + "色颜料")
 
-
-class ObjectPack:
-    "对象的包装类，封装指定的对象是否在使用中"
-    def __init__(self, obj, inUsing = False):
-        self.__obj = obj
-        self.__inUsing = inUsing
-
-    def inUsing(self):
-        return self.__inUsing
-
-    def setUsing(self, isUsing):
-        self.__inUsing = isUsing
-
-    def getObj(self):
-        return self.__obj
-
-class PowerBankBox:
-    "存放移动电源的智能箱盒"
+class PigmengFactory:
+    "资料的工厂类"
 
     def __init__(self):
-        self.__pools = {}
-        self.__pools['0001'] = ObjectPack(PowerBank('0001', 100))
-        self.__pools['0002'] = ObjectPack(PowerBank('0002', 100))
+        self.__sigmentPool = {
+            '红': Pigment('红'),
+            '黄': Pigment('黄'),
+            '蓝': Pigment('蓝'),
+            '绿': Pigment('绿'),
+            '紫': Pigment('紫'),
+        }
 
-    def borrow(self, serialNum):
-        "使用移动电源"
-        item = self.__pools.get(serialNum)
-        result = None
-        if(item is None):
-            print("没有可用的电源！")
-        elif(not item.inUsing()):
-            item.setUsing(True)
-            result = item.getObj()
-        else:
-            print(str(serialNum) + "电源已被借用！")
-        return result
+    def getPigment(self, color):
+        pigment = self.__sigmentPool.get(color)
+        if pigment is None:
+            logging.error("没有%s颜色的颜料！", color)
+        return pigment
 
-    def giveBack(self, serialNum):
-        "归还移动电源"
-        item = self.__pools.get(serialNum)
-        if(item is not None):
-            item.setUsing(False)
-            print(str(serialNum) + "电源已归还!")
 
 # Version 2.0
 #=======================================================================================================================
@@ -83,24 +54,24 @@ class PowerBankBox:
 
 # Test
 #=======================================================================================================================
-def testPowerBank():
-    box = PowerBankBox()
-    powerBank1 = box.borrow('0001')
-    if(powerBank1 is not None):
-        powerBank1.setUser('Tony')
-        powerBank1.showInfo()
-    powerBank2 = box.borrow('0002')
-    if(powerBank2 is not None):
-        powerBank2.setUser('Sam')
-        powerBank2.showInfo()
-    powerBank3 = box.borrow('0001')
-    box.giveBack('0001')
-    powerBank3 = box.borrow('0001')
-    if(powerBank3 is not None):
-        powerBank3.setUser('Aimee')
-        powerBank3.showInfo()
+def testPigment():
+    factory = PigmengFactory()
+    pigmentRed = factory.getPigment('红').setUser('梦之队')
+    pigmentRed.showInfo()
+    pigmentYellow = factory.getPigment('黄').setUser('梦之队')
+    pigmentYellow.showInfo()
+    pigmentBlue1 = factory.getPigment('蓝').setUser('梦之队')
+    pigmentBlue1.showInfo()
+    pigmentBlue2 = factory.getPigment('蓝').setUser('和平队')
+    pigmentBlue2.showInfo()
 
 
 
-testPowerBank()
 
+
+# print("Blue1:" + str(id(pigmentBlue1)) + ", Bule2:" + str(id(pigmentBlue2))
+#       + ", Blue1==Blue2:" + str(pigmentBlue1 == pigmentBlue2))
+
+
+
+testPigment()
