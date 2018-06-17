@@ -19,6 +19,7 @@
 # import pattern.Strategy
 # import pattern.Command
 # import pattern.Memento
-import pattern.Flyweight
+# import pattern.Flyweight
 
 # import pattern.Filter
+import advanced_pattern.ObjectPool
