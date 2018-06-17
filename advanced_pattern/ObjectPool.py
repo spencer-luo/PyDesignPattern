@@ -239,30 +239,17 @@ def testObjectPool():
     if (powerBank2 is not None):
         powerBank2.setUser("Sam")
         powerBank2.showInfo()
-    # powerBank3 = powerBankPool.borrowObject()
     powerBankPool.returnObject(powerBank1)
+    # powerBank1归还后，不能再对其进行相关操作
     powerBank3 = powerBankPool.borrowObject()
     if (powerBank3 is not None):
         powerBank3.setUser("Aimee")
         powerBank3.showInfo()
 
-class Person:
-    height = 152
-
-    def __init__(self, name, age):
-        self.__name = name
-        self.__age = age
-
-def testObj():
-    p1 = Person("Spanecer", 22)
-    p2 = Person("Spanecer", 22)
-    print(p1.height)
-    p1.height = 160
-    print(p2.height)
-    a = "I'm %s. I'm %04d year old" % ('Vamei', 99)
-    print(a)
-    print("I'm %(name)s. I'm %(age)d year old" % {'name': 'Vamei', 'age': 99})
+    powerBankPool.returnObject(powerBank2)
+    powerBankPool.returnObject(powerBank3)
+    powerBankPool.clear()
 
 # testPowerBank()
 testObjectPool()
-# testObj()
+
