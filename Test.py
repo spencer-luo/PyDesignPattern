@@ -20,6 +20,7 @@
 # import pattern.Command
 # import pattern.Memento
 # import pattern.Flyweight
+import pattern.Facade
 
 # import pattern.Filter
-import advanced_pattern.ObjectPool
+# import advanced_pattern.ObjectPool
