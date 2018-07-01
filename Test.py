@@ -20,7 +20,10 @@
 # import pattern.Command
 # import pattern.Memento
 # import pattern.Flyweight
-import pattern.Facade
+# import pattern.Facade
+import pattern.Visitor
 
 # import pattern.Filter
 # import advanced_pattern.ObjectPool
+
+# import application.ImageProcessing
