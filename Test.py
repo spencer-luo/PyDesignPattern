@@ -22,7 +22,8 @@
 # import pattern.Flyweight
 # import pattern.Facade
 # import pattern.Visitor
-import pattern.Template
+# import pattern.Template
+import pattern.Bridge
 
 # import pattern.Filter
 # import advanced_pattern.ObjectPool
