@@ -21,7 +21,8 @@
 # import pattern.Memento
 # import pattern.Flyweight
 # import pattern.Facade
-import pattern.Visitor
+# import pattern.Visitor
+import pattern.Template
 
 # import pattern.Filter
 # import advanced_pattern.ObjectPool
