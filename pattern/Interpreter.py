@@ -143,7 +143,7 @@ def testCalculator():
     newExp, expressionMap = getMapValue(expStr)
     calculator = Calculator(newExp)
     result = calculator.run(expressionMap)
-    print("运算结果为:" + expStr + " = " + result)
+    print("运算结果为:" + expStr + " = " + str(result))
 
 def getMapValue(expStr):
     preIdx = 0
