@@ -24,9 +24,9 @@
 # import pattern.Visitor
 # import pattern.Template
 # import pattern.Bridge
-import pattern.Interpreter
+# import pattern.Interpreter
 
-# import pattern.Filter
+import advanced_pattern.Filter
 # import advanced_pattern.ObjectPool
 
 # import application.ImageProcessing
