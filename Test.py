@@ -28,6 +28,7 @@
 
 # import advanced_pattern.Filter
 # import advanced_pattern.ObjectPool
-import advanced_pattern.Callback
+# import advanced_pattern.Callback
 
 # import application.ImageProcessing
+import application.Principle
