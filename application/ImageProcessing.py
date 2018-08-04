@@ -72,7 +72,7 @@ class GradientProcessor(ImageDecorator):
 from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 import numpy as np
-# 引入numpy模块
+# 引入numpy模块进行矩阵的计算
 
 class DifferentialDerivative(metaclass=ABCMeta):
     """微分求导算法"""
@@ -166,6 +166,7 @@ def differentialDerivative():
     imgX = derivativeX.imgProcessing(img, width, height)
     derivativeY = DifferentialDerivativeY()
     imgY = derivativeY.imgProcessing(img, width, height)
+    # 实现Sobel微分算子
     imgScobel = cv2.addWeighted(imgX, 0.5, imgY, 0.5, 0)
 
     cv2.imshow("First order differential X", imgX)
