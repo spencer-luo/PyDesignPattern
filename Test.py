@@ -31,4 +31,4 @@
 # import advanced_pattern.Callback
 
 # import application.ImageProcessing
-import application.Principle
+import principle.Principle
