@@ -4,20 +4,30 @@
 
 # Version 1.0
 #=======================================================================================================================
-class IHightPerson:
-    "接口类，提供空实现的方法，由子类去实现"
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
+class IHightPerson(metaclass=ABCMeta):
+    """接口类，提供空实现的方法，由子类去实现"""
+
+    @abstractmethod
     def getName(self):
-        "获取姓名"
+        """获取姓名"""
         pass
 
+    @abstractmethod
     def getHeight(self):
-        "获取身高"
+        """获取身高"""
+        pass
+
+    @abstractmethod
+    def appearance(self, person):
+        """外貌"""
         pass
 
 
 class HighPerson(IHightPerson):
-    "个高的人"
+    """个高的人"""
 
     def __init__(self, name):
         self.__name = name
@@ -28,8 +38,12 @@ class HighPerson(IHightPerson):
     def getHeight(self):
         return 170
 
+    def appearance(self):
+        print(self.getName() + "身高" + str(self.getHeight()) + "，完美如你，天生的美女！")
+
+
 class ShortPerson:
-    "个矮的人"
+    """个矮的人"""
 
     def __init__(self, name):
         self.__name = name
@@ -43,69 +57,143 @@ class ShortPerson:
     def getShoesHeight(self):
         return 6
 
+
 class DecoratePerson(ShortPerson, IHightPerson):
-    "有高跟鞋搭配的人"
+    """有高跟鞋搭配的人"""
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def getName(self):
+        return super().getName()
 
     def getHeight(self):
         return super().getRealHeight() + super().getShoesHeight()
+
+    def appearance(self):
+        print(self.getName() + "身高" + str(self.getHeight()) + ", 在高跟鞋的适配下，你身高不输高圆圆，气质不输范冰冰！")
+
+
+class Hotel:
+    """(高级)酒店"""
+
+    def recruit(self, person):
+        """
+        :param person: IHightPerson的对象
+        """
+        suitable = self.receptionistSuitable(person)
+        print(person.getName() + "是否适合做接待员：", "符合" if suitable else "不符合")
+
+    def receptionistSuitable(self, person):
+        """
+        是否可以成为(高级酒店)接待员
+        :param person: IHightPerson的对象
+        :return: 是否符合做接待员的条件
+        """
+        return person.getHeight() >= 165;
 
 
 # Version 2.0
 #=======================================================================================================================
 # 代码框架
 #==============================
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
+class Target(metaclass=ABCMeta):
+    """目标类"""
+
+    @abstractmethod
+    def function(self):
+        pass
+
+
+class Adaptee:
+    """源对象类"""
+
+    def speciaficFunction(self):
+        print("被适配对象的特殊功能")
+
+class Adapter(Adaptee, Target):
+    """适配器"""
+
+    def function(self):
+        print("进行功能的转换")
+
+
+
+# 基于框架的实现
+#==============================
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+import os
+# 导入os库,用于文件、路径相关的解析
 
 class Page:
-    "电子书一页的内容"
+    """电子书一页的内容"""
     def __init__(self, pageNum):
         self.__pageNum = pageNum
 
     def getContent(self):
         return "第 " + str(self.__pageNum) + " 页的内容..."
 
+
 class Catalogue:
-    "目录结构"
+    """目录结构"""
 
     def __init__(self, title):
         self.__title = title
         self.__chapters = []
-        self.setChapter("第一章")
-        self.setChapter("第二章")
 
-    def setChapter(self, title):
+    def addChapter(self, title):
         self.__chapters.append(title)
 
     def showInfo(self):
-        print("标题：" + self.__title)
+        print("书名：" + self.__title)
+        print("目录:")
         for chapter in self.__chapters:
-            print(chapter)
+            print("    " + chapter)
 
-class IBook:
-    "电子书文档的接口类"
 
+class IBook(metaclass=ABCMeta):
+    """电子书文档的接口类"""
+
+    @abstractmethod
     def parseFile(self, filePath):
+        """解析文档"""
         pass
 
+    @abstractmethod
     def getCatalogue(self):
+        """获取目录"""
         pass
 
+    @abstractmethod
     def getPageCount(self):
+        """获取页数"""
         pass
 
+    @abstractmethod
     def getPage(self, pageNum):
+        """获取第pageNum页的内容"""
         pass
+
 
 class TxtBook(IBook):
-    "TXT解析类"
+    """TXT解析类"""
 
     def parseFile(self, filePath):
         # 模拟文档的解析
         print(filePath + " 文件解析成功")
+        self.__title = os.path.splitext(filePath)[0]
         self.__pageCount = 500
         return True
 
     def getCatalogue(self):
-        return Catalogue("TXT电子书")
+        catalogue = Catalogue(self.__title)
+        catalogue.addChapter("第一章 标题")
+        catalogue.addChapter("第二章 标题")
+        return catalogue
 
     def getPageCount(self):
         return self.__pageCount
@@ -113,17 +201,22 @@ class TxtBook(IBook):
     def getPage(self, pageNum):
         return Page(pageNum)
 
+
 class EpubBook(IBook):
-    "TXT解析类"
+    """Epub解析类"""
 
     def parseFile(self, filePath):
         # 模拟文档的解析
         print(filePath + " 文件解析成功")
+        self.__title = os.path.splitext(filePath)[0]
         self.__pageCount = 800
         return True
 
     def getCatalogue(self):
-        return Catalogue("Epub电子书")
+        catalogue = Catalogue(self.__title)
+        catalogue.addChapter("第一章 标题")
+        catalogue.addChapter("第二章 标题")
+        return catalogue
 
     def getPageCount(self):
         return self.__pageCount
@@ -133,8 +226,15 @@ class EpubBook(IBook):
 
 
 class Outline:
-    "第三方PDF解析库的目录类"
-    pass
+    """第三方PDF解析库的目录类"""
+    def __init__(self):
+        self.__outlines = []
+
+    def addOutline(self, title):
+        self.__outlines.append(title)
+
+    def getOutlines(self):
+        return self.__outlines
 
 
 class PdfPage:
@@ -148,18 +248,22 @@ class PdfPage:
 
 
 class ThirdPdf:
-    "第三方PDF解析库"
+    """第三方PDF解析库"""
 
     def __init__(self):
         self.__pageSize = 0
 
     def open(self, filePath):
-        print("第三方解析PDF文件：" + filePath)
+        print("第三方库解析PDF文件：" + filePath)
+        self._title = os.path.splitext(filePath)[0]
         self.__pageSize = 1000
         return True
 
     def getOutline(self):
-        return Outline()
+        outline = Outline()
+        outline.addOutline("第一章 PDF电子书标题")
+        outline.addOutline("第二章 PDF电子书标题")
+        return outline
 
     def pageSize(self):
         return self.__pageSize
@@ -168,7 +272,7 @@ class ThirdPdf:
         return PdfPage(index)
 
 class PdfAdapterBook(ThirdPdf, IBook):
-    "TXT解析类"
+    """对第三方的PDF解析库重新进行包装"""
 
     def parseFile(self, filePath):
         # 模拟文档的解析
@@ -178,9 +282,12 @@ class PdfAdapterBook(ThirdPdf, IBook):
         return rtn
 
     def getCatalogue(self):
-        outline = super().getOutline()
+        outline = self.getOutline()
         print("将Outline结构的目录转换成Catalogue结构的目录")
-        return Catalogue("PDF电子书")
+        catalogue = Catalogue(self._title)
+        for title in outline.getOutlines():
+            catalogue.addChapter(title)
+        return catalogue
 
     def getPageCount(self):
         return super().pageSize()
@@ -190,9 +297,6 @@ class PdfAdapterBook(ThirdPdf, IBook):
         print("将PdfPage的面对象转换成Page的对象")
         return Page(page.getPageNum())
 
-
-# 导入os库
-import os
 
 class Reader:
     "阅读器"
@@ -233,73 +337,67 @@ class Reader:
         catalogue.showInfo()
 
     def prePage(self):
+        print("往前翻一页：", end="")
         return self.gotoPage(self.__curPageNum - 1)
 
     def nextPage(self):
+        print("往后翻一页：", end="")
         return self.gotoPage(self.__curPageNum + 1)
 
     def gotoPage(self, pageNum):
-        if(pageNum < 1 or pageNum > self.__curBook.getPageCount()):
-            return None
+        if(pageNum > 1 and pageNum < self.__curBook.getPageCount() -1):
+            self.__curPageNum = pageNum
 
-        self.__curPageNum = pageNum
         print("显示第" + str(self.__curPageNum) + "页")
         page = self.__curBook.getPage(self.__curPageNum)
         page.getContent()
         return page
 
 
-# 基于框架的实现
-#==============================
-
-
 # Test
 #=======================================================================================================================
 
-def canPlayReceptionist(person):
-    """
-    是否可以成为(高级酒店)接待员
-    :param person: IHightPerson的对象
-    :return: 是否符合做接待员的条件
-    """
-    return person.getHeight() >= 165;
-
-
 def testPerson():
     lira = HighPerson("Lira")
-    print(lira.getName() + "身高" + str(lira.getHeight()) + "，完美如你，天生的美女！" )
-    print("是否适合做接待员：", "符合" if canPlayReceptionist(lira) else "不符合")
-    print()
+    lira.appearance()
     demi = DecoratePerson("Demi");
-    print(demi.getName() + "身高" + str(demi.getHeight()) + "在高跟鞋的适配下，你身高不输高圆圆，气质不输范冰冰！")
-    print("是否适合做接待员：", "符合" if canPlayReceptionist(lira) else "不符合")
+    demi.appearance()
+    hotel = Hotel()
+    hotel.recruit(lira)
+    hotel.recruit(demi)
 
+def testAdapter():
+    adpater = Adapter()
+    adpater.function()
 
 def testReader():
     reader = Reader("阅读器")
     if(not reader.openFile("平凡的世界.txt")):
         return
     reader.showCatalogue()
-    reader.gotoPage(1)
+    reader.prePage()
+    reader.nextPage()
     reader.nextPage()
     reader.closeFile()
     print()
 
-    if (not reader.openFile("平凡的世界.epub")):
+    if (not reader.openFile("追风筝的人.epub")):
         return
     reader.showCatalogue()
-    reader.gotoPage(5)
     reader.nextPage()
+    reader.nextPage()
+    reader.prePage()
     reader.closeFile()
     print()
 
-    if (not reader.openFile("平凡的世界.pdf")):
+    if (not reader.openFile("如何从生活中领悟设计模式.pdf")):
         return
     reader.showCatalogue()
-    reader.gotoPage(10)
+    reader.nextPage()
     reader.nextPage()
     reader.closeFile()
 
 
 # testPerson()
-testReader()
+testAdapter()
+# testReader()
