@@ -5,7 +5,8 @@
 
 # from . import SRP
 # from . import OCP
-from . import LSP
+# from . import LSP
 # from  . import DIP
 # from  . import LoD
 # from  . import ISP
+from . import DRY
