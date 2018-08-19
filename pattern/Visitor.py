@@ -106,7 +106,7 @@ class OtherFriend(Visitor):
 # 实战
 # =======================================================================================================================
 class Animal(DataNode):
-    "动物类"
+    """动物类"""
 
     def __init__(self, name, isMale, age, weight):
         self.__name = name
@@ -127,7 +127,7 @@ class Animal(DataNode):
         return self.__weight
 
 class Cat(Animal):
-    "猫"
+    """猫"""
 
     def __init__(self, name, isMale, age, weight):
         super().__init__(name, isMale, age, weight)
@@ -137,7 +137,7 @@ class Cat(Animal):
 
 
 class Dog(Animal):
-    "狗"
+    """狗"""
 
     def __init__(self,  name, isMale, age, weight):
         super().__init__( name, isMale, age, weight)
@@ -147,7 +147,7 @@ class Dog(Animal):
 
 
 class GenderCounter(Visitor):
-    "性别统计"
+    """性别统计"""
 
     def __init__(self):
         self.__maleCat = 0
@@ -174,6 +174,7 @@ class GenderCounter(Visitor):
               + str(self.__maleDog) + "只雄狗，" + str(self.__femalDog) + "只雌狗。")
 
 class WeightCounter(Visitor):
+    """体重的统计"""
 
     def __init__(self):
         self.__catNum = 0
@@ -197,6 +198,7 @@ class WeightCounter(Visitor):
 
 
 class AgeCounter(Visitor):
+    """年龄统计"""
 
     def __init__(self):
         self.__catMaxAge = 0
