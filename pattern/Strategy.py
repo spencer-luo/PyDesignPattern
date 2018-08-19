@@ -177,15 +177,15 @@ def testPersonListInPython():
         Person("Helen", 16, 45.7, 1.60)
     ]
 
-    # 使用使用operator模块根据年龄进行排序
-    print("根据年龄进行排序后的结果：")
+    # 使用operator模块根据年龄、身高进行排序
     sortedPerons = sorted(personList, key = attrgetter('age'))
+    sortedPerons1 = sorted(personList, key=attrgetter('height'))
+
+    print("根据年龄进行排序后的结果：")
     for person in sortedPerons:
         person.showMysef()
     print()
-
     print("根据身高进行排序后的结果：")
-    sortedPerons1 = sorted(personList, key=attrgetter('height'))
     for person in sortedPerons1:
         person.showMysef()
 
@@ -198,8 +198,8 @@ def testPersonListInPython():
 
 
 # testTheDinner()
-testSortPerson()
-# testPersonListInPython()
+# testSortPerson()
+testPersonListInPython()
 
 
 # testArray()
