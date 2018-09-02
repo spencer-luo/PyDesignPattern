@@ -2,8 +2,11 @@
 
 # Version 1.0
 ########################################################################################################################
+# from abc import ABCMeta, abstractmethod
+# # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+#
 # class WaterHeater:
-#     "热水器：战胜寒冬的有利武器"
+#     """热水器：战胜寒冬的有利武器"""
 #
 #     def __init__(self):
 #         self.__observers = []
@@ -14,7 +17,7 @@
 #
 #     def setTemperature(self, temperature):
 #         self.__temperature = temperature
-#         print("current temperature is:", self.__temperature)
+#         print("当前温度是：" + str(self.__temperature) + "℃")
 #         self.notifies()
 #
 #     def addObserver(self, observer):
@@ -25,23 +28,24 @@
 #             o.update(self)
 #
 #
-# class Observer:
+# class Observer(metaclass=ABCMeta):
 #     "洗澡模式和饮用模式的父类"
 #
+#     @abstractmethod
 #     def update(self, waterHeater):
 #         pass
 #
 #
 # class WashingMode(Observer):
-#     "该模式用于洗澡用"
+#     """该模式用于洗澡"""
 #
 #     def update(self, waterHeater):
 #         if waterHeater.getTemperature() >= 50 and waterHeater.getTemperature() < 70:
-#             print("水已烧好，温度正好！可以用来洗澡了。")
+#             print("水已烧好！温度正好，可以用来洗澡了。")
 #
 #
 # class DrinkingMode(Observer):
-#     "该模式用于饮用"
+#     """该模式用于饮用"""
 #
 #     def update(self, waterHeater):
 #         if waterHeater.getTemperature() >= 100:
@@ -50,16 +54,19 @@
 
 # Version 2.0
 ########################################################################################################################
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
-class Observer:
-    "观察者的基类"
+class Observer(metaclass=ABCMeta):
+    """观察者的基类"""
 
+    @abstractmethod
     def update(self, observable, object):
         pass
 
 
 class Observable:
-    "被观察者的基类"
+    """被观察者的基类"""
 
     def __init__(self):
         self.__observers = []
@@ -76,7 +83,7 @@ class Observable:
 
 
 class WaterHeater(Observable):
-    "热水器：战胜寒冬的有利武器"
+    """热水器：战胜寒冬的有利武器"""
 
     def __init__(self):
         super().__init__()
@@ -87,17 +94,17 @@ class WaterHeater(Observable):
 
     def setTemperature(self, temperature):
         self.__temperature = temperature
-        print("current temperature is:", self.__temperature)
+        print("当前温度是：" + str(self.__temperature) + "℃")
         self.notifyObservers()
 
 
 class WashingMode(Observer):
-    "该模式用于洗澡用"
+    """该模式用于洗澡用"""
 
     def update(self, observable, object):
-        if isinstance(observable,
-                      WaterHeater) and observable.getTemperature() >= 50 and observable.getTemperature() < 70:
-            print("水已烧好，温度正好！可以用来洗澡了。")
+        if isinstance(observable, WaterHeater) \
+                and observable.getTemperature() >= 50 and observable.getTemperature() < 70:
+            print("水已烧好！温度正好，可以用来洗澡了。")
 
 
 class DrinkingMode(Observer):
