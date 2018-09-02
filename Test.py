@@ -15,7 +15,7 @@
 # import pattern.Composite
 # import pattern.Clone
 # import pattern.Builder
-# import pattern.Adapter
+import pattern.Adapter
 # import pattern.Strategy
 # import pattern.Command
 # import pattern.Memento
@@ -31,4 +31,4 @@
 # import advanced_pattern.Callback
 
 # import application.ImageProcessing
-import principle.Principle
+# import principle.Principle

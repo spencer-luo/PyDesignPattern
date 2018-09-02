@@ -74,6 +74,20 @@ class DecoratePerson(ShortPerson, IHightPerson):
         print(self.getName() + "身高" + str(self.getHeight()) + ", 在高跟鞋的适配下，你身高不输高圆圆，气质不输范冰冰！")
 
 
+class HeightMatch:
+    """身高匹配"""
+
+    def __init__(self, person):
+        self.__person = person
+
+    def matching(self, person1):
+        """假设标准身高差为10厘米内"""
+        distance = abs(self.__person.getHeight() - person1.getHeight())
+        isMatch = distance <= 10
+        print(self.__person.getName() + "和" + person1.getName() + "是否为情侣的标准身高差："
+              + ("是" if isMatch else "否") + ", 差值：" + str(distance))
+
+
 class Hotel:
     """(高级)酒店"""
 
@@ -362,9 +376,13 @@ def testPerson():
     lira.appearance()
     demi = DecoratePerson("Demi");
     demi.appearance()
-    hotel = Hotel()
-    hotel.recruit(lira)
-    hotel.recruit(demi)
+
+    haigerMatching = HeightMatch(HighPerson("Haiger"))
+    haigerMatching.matching(lira)
+    haigerMatching.matching(demi)
+    # hotel = Hotel()
+    # hotel.recruit(lira)
+    # hotel.recruit(demi)
 
 def testAdapter():
     adpater = Adapter()
@@ -398,6 +416,6 @@ def testReader():
     reader.closeFile()
 
 
-# testPerson()
-testAdapter()
+testPerson()
+# testAdapter()
 # testReader()
