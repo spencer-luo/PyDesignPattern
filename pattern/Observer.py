@@ -150,7 +150,6 @@ class Account(Observable):
         return latestRegion is not None and latestRegion != region;
 
 
-
 class SmsSender(Observer):
     """短信发送器"""
 
