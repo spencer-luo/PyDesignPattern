@@ -181,6 +181,9 @@ class DeviceItem:
     def getType(self):
         return self.__type
 
+    def isDefault(self):
+        return self.__isDefault
+
 
 class DeviceList:
     """设备列表"""
