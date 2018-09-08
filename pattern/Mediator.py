@@ -92,7 +92,7 @@ class HouseOwner:
         self.__houseInfo.showInfo()
 
 
-class Custom:
+class Customer:
     """用户，租房的贫下中农"""
 
     def __init__(self, name):
@@ -121,6 +121,29 @@ class Custom:
 #=======================================================================================================================
 # 代码框架
 #==============================
+class InteractiveObject:
+    """进行交互的对象"""
+    pass
+
+class InteractiveObjectImplA:
+    """实现类A"""
+    pass
+
+class InteractiveObjectImplB:
+    """实现类B"""
+    pass
+
+class Meditor:
+    """中介类"""
+
+    def __init__(self):
+        self.__interactiveObjA = InteractiveObjectImplA()
+        self.__interactiveObjB = InteractiveObjectImplB()
+
+    def interative(self):
+        """进行交互的操作"""
+        # 通过self.__interactiveObjA和self.__interactiveObjB完成相应的交互操作
+        pass
 
 
 # 基于框架的实现
@@ -265,7 +288,7 @@ def testRenting():
     myHome.signContracts(3)
     print()
 
-    tony = Custom("Tony")
+    tony = Customer("Tony")
     houseInfos = tony.findHouse("18平米左右，要有独卫，要有窗户，最好是朝南，有厨房更好！价位在2000左右", myHome)
     print()
     print("正在看房，寻找最合适的住巢……")
