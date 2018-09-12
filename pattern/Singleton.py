@@ -3,24 +3,26 @@
 # Version 1.0
 ########################################################################################################################
 
-# 单例
-# class Love(object):
-#     "真爱"
-#     __instance = None
-#     __first_init = None
-#
-#     def __new__(cls, name):
-#         if not cls.__instance:
-#             Love.__instance = object.__new__(cls)
-#         return cls.__instance
-#
-#     def __init__(self, name):
-#         if not self.__first_init:
-#             self.__name = name
-#             Love.__first_init = True
-#
-#     def showMyLove(self):
-#         print("I love", self.__name, "forever!")
+class MyBeautifulGril(object):
+    """我的漂亮女神"""
+    __instance = None
+    __firstInit = False
+
+    def __new__(cls, name):
+        if not cls.__instance:
+            MyBeautifulGril.__instance = super().__new__(cls)
+        return cls.__instance
+
+    def __init__(self, name):
+        if not self.__firstInit:
+            self.__name = name
+            print("遇见" + name + "，我一见钟情！")
+            MyBeautifulGril.__firstInit = True
+        else:
+            print("遇见" + name + "，我置若罔闻！")
+
+    def showMyHeart(self):
+        print(self.__name + "就我心中的唯一！")
 
 
 # 各种singleton实现方式
@@ -106,28 +108,24 @@ def singletonDecorator(cls, *args, **kwargs):
 
 # Version 2.0
 ########################################################################################################################
-@singletonDecorator
-class Love:
-    "真爱"
-    def __init__(self, name):
-        self.__name = name
-
-    def showMyLove(self):
-        print("I love", self.__name, "forever!")
+# @singletonDecorator
+# class Love:
+#     "真爱"
+#     def __init__(self, name):
+#         self.__name = name
+#
+#     def showMyHeart(self):
+#         print("I love", self.__name, "forever!")
 
 # Test
 ########################################################################################################################
 def TestLove():
-    "测试程序"
-    love0 = Love("Jenny")
-    love1 = Love("Jean")
-    love0.showMyLove()
-    love1.showMyLove()
-    print("id(love0):", id(love0), "id(love1):", id(love1))
-    print("love0 == love1:", love0 == love1)
+    jenny = MyBeautifulGril("Jenny")
+    jenny.showMyHeart()
+    kimi = MyBeautifulGril("Kimi")
+    kimi.showMyHeart()
+    print("id(jenny):", id(jenny), " id(kimi):", id(kimi))
 
 
 TestLove()
-
-
 
