@@ -6,7 +6,7 @@
 class MyBeautifulGril(object):
     """我的漂亮女神"""
     __instance = None
-    __firstInit = False
+    __isFirstInit = False
 
     def __new__(cls, name):
         if not cls.__instance:
@@ -14,10 +14,10 @@ class MyBeautifulGril(object):
         return cls.__instance
 
     def __init__(self, name):
-        if not self.__firstInit:
+        if not self.__isFirstInit:
             self.__name = name
             print("遇见" + name + "，我一见钟情！")
-            MyBeautifulGril.__firstInit = True
+            MyBeautifulGril.__isFirstInit = True
         else:
             print("遇见" + name + "，我置若罔闻！")
 
@@ -28,31 +28,33 @@ class MyBeautifulGril(object):
 # 各种singleton实现方式
 ########################################################################################################################
 # class Singleton1(object):
-#     "单例"
+#     """单例实现方式一"""
 #     __instance = None
-#     __first_init = None
+#     __isFirstInit = False
 #
 #     def __new__(cls, name):
 #         if not cls.__instance:
-#             Singleton1.__instance = object.__new__(cls)
+#             Singleton1.__instance = super().__new__(cls)
 #         return cls.__instance
 #
 #     def __init__(self, name):
-#         if not self.__first_init:
+#         if not self.__isFirstInit:
 #             self.__name = name
-#             Singleton1.__first_init = True
+#             Singleton1.__isFirstInit = True
 #
 #     def getName(self):
 #         return self.__name
 #
 # # Test
-# s0 = Singleton1("Zhangsan")
-# s1 = Singleton1("Lisi")
-# print(s0.getName(), s1.getName())
-# print("id(s0):", id(s0), "id(s1):", id(s1))
-# print("s0 == s1:", s0 == s1)
+# tony = Singleton1("Tony")
+# karry = Singleton1("Karry")
+# print(tony.getName(), karry.getName())
+# print("id(tony):", id(tony), "id(karry):", id(karry))
+# print("tony == karry:", tony == karry)
 
 
+# 方式二
+#========================================================================================
 # class Singleton2(type):
 #     def __init__(cls, name, bases, attrs):
 #         super(Singleton2, cls).__init__(name, bases, attrs)
@@ -127,5 +129,5 @@ def TestLove():
     print("id(jenny):", id(jenny), " id(kimi):", id(kimi))
 
 
-TestLove()
+# TestLove()
 
