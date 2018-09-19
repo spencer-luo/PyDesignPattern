@@ -4,21 +4,22 @@
 
 # Version 1.0
 #=======================================================================================================================
-class Person:
-    "人"
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
+class Person(metaclass=ABCMeta):
+    """人"""
 
     def __init__(self, name):
-        self.__name = name
+        self._name = name
 
-    def getName(self):
-        return self.__name
-
+    @abstractmethod
     def wear(self):
-        print("我的着装是：")
+        print("着装：")
 
 
 class Engineer(Person):
-    "工程师"
+    """工程师"""
 
     def __init__(self, name, skill):
         super().__init__(name)
@@ -28,7 +29,7 @@ class Engineer(Person):
         return self.__skill
 
     def wear(self):
-        print("我是" + self.getSkill() + "工程师" + self.getName())
+        print("我是 " + self.getSkill() + "工程师 " + self._name, end="， ")
         super().wear()
 
 class Teacher(Person):
@@ -42,81 +43,82 @@ class Teacher(Person):
         return self.__title
 
     def wear(self):
-        print("我是" + self.getName() + self.getTitle())
+        print("我是 " + self._name + self.getTitle(), end="， ")
         super().wear()
 
 class ClothingDecorator(Person):
-    "服装装饰器"
+    """服装装饰器的基类"""
 
     def __init__(self, person):
         self._decorated = person
 
     def wear(self):
         self._decorated.wear()
+        self.decorate()
+
+    @abstractmethod
+    def decorate(self):
+        pass
 
 
 class CasualPantDecorator(ClothingDecorator):
-    "休闲裤"
+    """休闲裤装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一条卡其色休闲裤")
 
 
 class BeltDecorator(ClothingDecorator):
-    "腰带"
+    """腰带装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一条银色针扣头的黑色腰带")
 
 class LeatherShoesDecorator(ClothingDecorator):
-    "皮鞋"
+    """皮鞋装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一双深色休闲皮鞋")
 
 class KnittedSweaterDecorator(ClothingDecorator):
-    "针织毛衣"
+    """针织毛衣装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一件紫红色针织毛衣")
 
 
 class WhiteShirtDecorator(ClothingDecorator):
-    "白色衬衫"
+    """白色衬衫装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一件白色衬衫")
 
 
 class GlassesDecorator(ClothingDecorator):
-    "眼镜"
+    """眼镜装饰器"""
 
     def __init__(self, person):
         super().__init__(person)
 
-    def wear(self):
-        super().wear()
+    def decorate(self):
         print("一副方形黑框眼镜")
+
+
 
 # Version 2.0
 #=======================================================================================================================
@@ -147,10 +149,7 @@ def testDecorator():
 
 def testDecorator2():
     tony = Engineer("Tony", "客户端")
-    pant = CasualPantDecorator(tony)
-    belt = BeltDecorator(pant)
-    shoes = LeatherShoesDecorator(belt)
-    sweater = KnittedSweaterDecorator(shoes)
+    sweater = KnittedSweaterDecorator(tony)
     shirt = WhiteShirtDecorator(sweater)
     glasses = GlassesDecorator(shirt)
     glasses.wear()
