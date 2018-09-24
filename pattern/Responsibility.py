@@ -2,8 +2,11 @@
 
 # Version 1.0
 ########################################################################################################################
+# from abc import ABCMeta, abstractmethod
+# # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+#
 # class Person:
-#     "请假申请人"
+#     """请假申请人"""
 #     def __init__(self, name, dayoff, reason):
 #         self.__name = name
 #         self.__dayoff = dayoff
@@ -23,18 +26,18 @@
 #         self.__leader = leader
 #
 #     def reuqest(self):
-#         print(self.__name, "申请请假", self.__dayoff, "天。请假事由：", self.__reason)
+#         print("%s 申请请假 %d 天。请假事由：%s" % (self.__name, self.__dayoff, self.__reason) )
 #         if( self.__leader is not None):
 #             self.__leader.handleRequest(self)
 #
 #
-# class Manager:
-#     "公司管理人员"
+# class Manager(metaclass=ABCMeta):
+#     """公司管理人员"""
 #
 #     def __init__(self, name, title):
 #         self.__name = name
 #         self.__title = title
-#         self.__nextHandler = None
+#         self._nextHandler = None
 #
 #     def getName(self):
 #         return self.__name
@@ -43,70 +46,68 @@
 #         return self.__title
 #
 #     def setNextHandler(self, nextHandler):
-#         self.__nextHandler = nextHandler
+#         self._nextHandler = nextHandler
 #
-#     def getNextHandler(self):
-#         return self.__nextHandler
-#
+#     @abstractmethod
 #     def handleRequest(self, person):
 #         pass
 #
 # class Supervisor(Manager):
-#     "主管"
+#     """主管"""
 #
 #     def __init__(self, name, title):
 #         super().__init__(name, title)
 #
 #     def handleRequest(self, person):
 #         if(person.getDayOff() <= 2):
-#             print("同意", person.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-#         nextHander = self.getNextHandler()
-#         if(nextHander is not None):
-#             nextHander.handleRequest(person)
+#             print("同意 %s 请假，签字人：%s(%s)" % (person.getName(), self.getName(), self.getTitle()) )
+#         if(self._nextHandler is not None):
+#             self._nextHandler.handleRequest(person)
 #
 #
 # class DepartmentManager(Manager):
-#     "部门总监"
+#     """部门总监"""
 #     def __init__(self, name, title):
 #         super().__init__(name, title)
 #
 #     def handleRequest(self, person):
 #         if(person.getDayOff() >2 and person.getDayOff() <= 5):
-#             print("同意", person.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-#         nextHander = self.getNextHandler()
-#         if(nextHander is not None):
-#             nextHander.handleRequest(person)
+#             print("同意 %s 请假，签字人：%s(%s)" % (person.getName(), self.getName(), self.getTitle()))
+#         if(self._nextHandler is not None):
+#             self._nextHandler.handleRequest(person)
 #
 # class CEO(Manager):
-#     "CEO"
+#     """CEO"""
 #
 #     def __init__(self, name, title):
 #         super().__init__(name, title)
 #
 #     def handleRequest(self, person):
 #         if (person.getDayOff() > 5 and person.getDayOff() <= 22):
-#             print("同意", person.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-#         nextHander = self.getNextHandler()
-#         if (nextHander is not None):
-#             nextHander.handleRequest(person)
+#             print("同意 %s 请假，签字人：%s(%s)" % (person.getName(), self.getName(), self.getTitle()))
 #
-# class Spencer.Luo(Manager):
-#     "行政人员"
+#         if (self._nextHandler is not None):
+#             self._nextHandler.handleRequest(person)
+#
+# class Administrator(Manager):
+#     """行政人员"""
 #
 #     def __init__(self, name, title):
 #         super().__init__(name, title)
 #
 #     def handleRequest(self, person):
-#         print(person.getName(), "的请假申请已审核，情况属实！已备案处理。处理人：", self.getName(), "(", self.getTitle(), ")\n")
-#         nextHander = self.getNextHandler()
+#         print("%s 的请假申请已审核，情况属实！已备案处理。处理人：%s(%s)\n" % (person.getName(), self.getName(), self.getTitle()))
 
 
 # Version 2.0
 ########################################################################################################################
 # 代码框架
 ##################
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
 class Request:
-    "请求(内容)"
+    """请求(内容)"""
 
     def __init__(self, name, dayoff, reason):
         self.__name = name
@@ -124,13 +125,13 @@ class Request:
         return self.__reason
 
 
-class Responsible:
-    "责任人抽象类"
+class Responsible(metaclass=ABCMeta):
+    """责任人抽象类"""
 
     def __init__(self, name, title):
         self.__name = name
         self.__title = title
-        self.__nextHandler = None
+        self._nextHandler = None
 
     def getName(self):
         return self.__name
@@ -139,11 +140,12 @@ class Responsible:
         return self.__title
 
     def setNextHandler(self, nextHandler):
-        self.__nextHandler = nextHandler
+        self._nextHandler = nextHandler
 
     def getNextHandler(self):
-        return self.__nextHandler
+        return self._nextHandler
 
+    @abstractmethod
     def handleRequest(self, request):
         pass
 
@@ -151,7 +153,7 @@ class Responsible:
 # 基于框架的实现
 ##################
 class Person:
-    "请求者"
+    """请求者(请假人)"""
 
     def __init__(self, name):
         self.__name = name
@@ -170,70 +172,66 @@ class Person:
         return self.__leader
 
     def sendReuqest(self, request):
-        print(self.__name, "申请请假", request.getDayOff(), "天。请假事由：", request.getReason())
+        print("%s 申请请假 %d 天。请假事由：%s" % (self.__name, request.getDayOff(), request.getReason()))
         if (self.__leader is not None):
             self.__leader.handleRequest(request)
 
 
 class Supervisor(Responsible):
-    "主管"
+    """主管"""
 
     def __init__(self, name, title):
         super().__init__(name, title)
 
     def handleRequest(self, request):
         if (request.getDayOff() <= 2):
-            print("同意", request.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-        nextHander = self.getNextHandler()
-        if (nextHander is not None):
-            nextHander.handleRequest(request)
+            print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
+        if (self._nextHandler is not None):
+            self._nextHandler.handleRequest(request)
 
 
 class DepartmentManager(Responsible):
-    "部门总监"
+    """部门总监"""
 
     def __init__(self, name, title):
         super().__init__(name, title)
 
     def handleRequest(self, request):
         if (request.getDayOff() > 2 and request.getDayOff() <= 5):
-            print("同意", request.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-        nextHander = self.getNextHandler()
-        if (nextHander is not None):
-            nextHander.handleRequest(request)
+            print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
+        if (self._nextHandler is not None):
+            self._nextHandler.handleRequest(request)
 
 
 class CEO(Responsible):
-    "CEO"
+    """CEO"""
 
     def __init__(self, name, title):
         super().__init__(name, title)
 
     def handleRequest(self, request):
         if (request.getDayOff() > 5 and request.getDayOff() <= 22):
-            print("同意", request.getName(), "请假，签字人：", self.getName(), "(", self.getTitle(), ")")
-        nextHander = self.getNextHandler()
-        if (nextHander is not None):
-            nextHander.handleRequest(request)
+            print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
+        if (self._nextHandler is not None):
+            self._nextHandler.handleRequest(request)
 
 
-class Spencer.Luo(Responsible):
-    "行政人员"
+class Administrator(Responsible):
+    """行政人员"""
 
     def __init__(self, name, title):
         super().__init__(name, title)
 
     def handleRequest(self, request):
-        print(request.getName(), "的请假申请已审核，情况属实！已备案处理。处理人：", self.getName(), "(", self.getTitle(), ")\n")
-        nextHander = self.getNextHandler()
+        print("%s 的请假申请已审核，情况属实！已备案处理。处理人：%s(%s)\n" % (request.getName(), self.getName(), self.getTitle()))
 
 # Test
 ########################################################################################################################
-# def testChainOfResponsibility():
+# def testAskForLeave():
 #     directLeader = Supervisor("Eren", "客户端研发部经理")
 #     departmentLeader = DepartmentManager("Eric", "技术研发中心总监")
 #     ceo = CEO("Helen", "创新文化公司CEO")
-#     administrator = Spencer.Luo("Nina", "行政中心总监")
+#     administrator = Administrator("Nina", "行政中心总监")
 #     directLeader.setNextHandler(departmentLeader)
 #     departmentLeader.setNextHandler(ceo)
 #     ceo.setNextHandler(administrator)
@@ -249,11 +247,11 @@ class Spencer.Luo(Responsible):
 #     pony.reuqest()
 
 
-def testChainOfResponsibility1():
+def testChainOfResponsibility():
     directLeader = Supervisor("Eren", "客户端研发部经理")
     departmentLeader = DepartmentManager("Eric", "技术研发中心总监")
     ceo = CEO("Helen", "创新文化公司CEO")
-    administrator = Spencer.Luo("Nina", "行政中心总监")
+    administrator = Administrator("Nina", "行政中心总监")
     directLeader.setNextHandler(departmentLeader)
     departmentLeader.setNextHandler(ceo)
     ceo.setNextHandler(administrator)
@@ -269,5 +267,5 @@ def testChainOfResponsibility1():
     pony.sendReuqest(Request(pony.getName(), 15, "出国深造。"))
 
 
-# testChainOfResponsibility()
-testChainOfResponsibility1()
+# testAskForLeave()
+testChainOfResponsibility()
