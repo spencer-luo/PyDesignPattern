@@ -5,35 +5,35 @@
 # Version 1.0
 #=======================================================================================================================
 class Register:
-    "入学报到"
+    """报到登记"""
 
     def register(self, name):
-        print("活动中心:" + name + "同学报到成功！")
+        print("活动中心:%s同学报到成功！" % name)
 
 
 class Payment:
-    "缴费"
+    """缴费中心"""
 
     def pay(self, name, money):
-        print("缴费中心:" + "收到" + name + "同学" + str(money) + "元付款，缴费成功！")
+        print("缴费中心:收到%s同学%s元付款，缴费成功！" % (name, money) )
 
 
 class DormitoryManagementCenter:
-    "宿舍管理中心(生活中心)"
+    """生活中心(宿舍管理中心)"""
 
     def provideLivingGoods(self, name):
-        print("生活中心:" + name + "同学的生活用品已发放。")
+        print("生活中心:%s同学的生活用品已发放。" % name)
 
 
 class Dormitory:
-    "宿舍"
+    """宿舍"""
 
     def meetRoommate(self, name):
-        print("宿    舍:" + "大家好！这是刚来的" + name + "同学，是你们未来需要共度四年的室友！相互认识一下……")
+        print("宿    舍:" + "大家好！这是刚来的%s同学，是你们未来需要共度四年的室友！相互认识一下……" % name)
 
 
 class Volunteer:
-    "迎新志愿者"
+    """迎新志愿者"""
 
     def __init__(self, name):
         self.__name = name
@@ -43,8 +43,7 @@ class Volunteer:
         self.__dormintory = Dormitory()
 
     def welcomeFreshmen(self, name):
-        print("你好," + name + "同学! 我是新生报到的志愿者" + self.__name
-              + "，我将带你完成整个报到流程。")
+        print("你好,%s同学! 我是新生报到的志愿者%s，我将带你完成整个报到流程。" % (name, self.__name))
         self.__register.register(name)
         self.__payment.pay(name, 10000)
         self.__lifeCenter.provideLivingGoods(name)
@@ -175,6 +174,6 @@ def testPath():
     i = 0
 
 
-# testRegister()
-testCompression()
+testRegister()
+# testCompression()
 # testPath()
