@@ -37,28 +37,12 @@ class NumeralIterator:
 
     def __init__(self, data):
         self.__data = data
-        self.toBegin()
-
-    def toBegin(self):
-        """将指针移至起始位置"""
         self.__curIdx = -1
-
-    def toEnd(self):
-        """将指针移至结尾位置"""
-        self.__curIdx = len(self.__data)
 
     def next(self):
         """移动至下一个元素"""
         if (self.__curIdx < len(self.__data) - 1):
             self.__curIdx += 1
-            return True
-        else:
-            return False
-
-    def previous(self):
-        "移动至上一个元素"
-        if (self.__curIdx > 0):
-            self.__curIdx -= 1
             return True
         else:
             return False
@@ -91,16 +75,50 @@ class NumeralSystem:
         return NumeralIterator(self.__customers)
 
 
-    # def visit(self):
-    #     for customer in self.__customers:
-    #         print("下一位病人 %04d(%s) 请到 %s 就诊。"
-    #               % (customer.getNum(), customer.getName(), customer.getClinic()) )
+    def visit(self):
+        for customer in self.__customers:
+            print("下一位病人 %04d(%s) 请到 %s 就诊。"
+                  % (customer.getNum(), customer.getName(), customer.getClinic()) )
 
 
 # Version 2.0
 #=======================================================================================================================
 # 代码框架
 #==============================
+class BaseIterator:
+    """迭代器"""
+
+    def __init__(self, data):
+        self.__data = data
+        self.toBegin()
+
+    def toBegin(self):
+        """将指针移至起始位置"""
+        self.__curIdx = -1
+
+    def toEnd(self):
+        """将指针移至结尾位置"""
+        self.__curIdx = len(self.__data)
+
+    def next(self):
+        """移动至下一个元素"""
+        if (self.__curIdx < len(self.__data) - 1):
+            self.__curIdx += 1
+            return True
+        else:
+            return False
+
+    def previous(self):
+        "移动至上一个元素"
+        if (self.__curIdx > 0):
+            self.__curIdx -= 1
+            return True
+        else:
+            return False
+
+    def current(self):
+        """获取当前的元素"""
+        return self.__data[self.__curIdx] if (self.__curIdx < len(self.__data) and self.__curIdx >= 0) else None
 
 
 # 基于框架的实现
@@ -128,21 +146,26 @@ def testHospital():
         print("下一位病人 %04d(%s) 请到 %s 就诊。"
               % (customer.getNum(), customer.getName(), customer.getClinic()) )
 
-
-    # print("从前往后遍历:")
-    # iterator = numeralSystem.getIterator()
-    # while(iterator.next()):
-    #     customer = iterator.current()
-    #     print("下一位病人", str(customer.getNum()).zfill(4), customer.getName(), "请到", customer.getClinic(),  "就诊。")
-    #
-    # print("从后往前遍历:")
-    # iterator.toEnd()
-    # while (iterator.previous()):
-    #     customer = iterator.current()
-    #     print("下一位病人", str(customer.getNum()).zfill(4), customer.getName(), "请到", customer.getClinic(), "就诊。")
-
-
     # numeralSystem.visit()
+
+
+
+def testBaseIterator():
+    print("从前往后遍历:")
+    iterator = BaseIterator(range(0, 10))
+    while(iterator.next()):
+        customer = iterator.current()
+        print(customer, end="\t")
+    print()
+
+    print("从后往前遍历:")
+    iterator.toEnd()
+    while (iterator.previous()):
+        customer = iterator.current()
+        print(customer, end="\t")
+
+
+
 
 
 
@@ -226,9 +249,39 @@ def testNextItem():
     # print(next(fib))
 
 
-testHospital()
+class NumberSequence:
+    """生成一个间隔为step的数字系列"""
+
+    def __init__(self, init, step, max = 100):
+        self.__data = init
+        self.__step = step
+        self.__max = max
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if(self.__data < self.__max):
+            tmp = self.__data
+            self.__data += self.__step
+            return tmp
+        else:
+            raise StopIteration
+
+
+def testNumberSequence():
+    numSeq = NumberSequence(0, 5, 20)
+    print(isinstance(numSeq, Iterable))
+    print(isinstance(numSeq, Iterator))
+    for n in numSeq:
+        print(n, end="\t")
+
+
+# testHospital()
+testBaseIterator()
 # testLoop()
 # testIterable()
 # testIsIterator()
 # testNextItem()
+# testNumberSequence()
 
