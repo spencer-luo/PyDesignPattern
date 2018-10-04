@@ -7,7 +7,7 @@
 from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
-class Component(metaclass=ABCMeta):
+class ComputerComponent(metaclass=ABCMeta):
     """组件，所有子配件的基类"""
 
     def __init__(self, name):
@@ -27,7 +27,7 @@ class Component(metaclass=ABCMeta):
         print("%s%s 即将结束工作..." % (indent, self._name) )
 
 
-class CPU(Component):
+class CPU(ComputerComponent):
     """中央处理器"""
 
     def __init__(self, name):
@@ -37,7 +37,7 @@ class CPU(Component):
         print("%sCPU:%s,可以进行高速计算。" % (indent, self._name))
 
 
-class MemoryCard(Component):
+class MemoryCard(ComputerComponent):
     """内存条"""
 
     def __init__(self, name):
@@ -47,7 +47,7 @@ class MemoryCard(Component):
         print("%s内存:%s,可以缓存数据，读写速度快。" % (indent, self._name))
 
 
-class HardDisk(Component):
+class HardDisk(ComputerComponent):
     """硬盘"""
 
     def __init__(self, name):
@@ -57,7 +57,7 @@ class HardDisk(Component):
         print("%s硬盘:%s,可以永久存储数据，容量大。" % (indent, self._name) )
 
 
-class GraphicsCard(Component):
+class GraphicsCard(ComputerComponent):
     """显卡"""
 
     def __init__(self, name):
@@ -67,7 +67,7 @@ class GraphicsCard(Component):
         print("%s显卡:%s,可以高速计算和处理图形图像。" % (indent, self._name) )
 
 
-class Battery(Component):
+class Battery(ComputerComponent):
     """电源"""
 
     def __init__(self, name):
@@ -77,7 +77,7 @@ class Battery(Component):
         print("%s电源:%s,可以持续给主板和外接配件供电。" % (indent, self._name) )
 
 
-class Fan(Component):
+class Fan(ComputerComponent):
     """风扇"""
 
     def __init__(self, name):
@@ -87,7 +87,7 @@ class Fan(Component):
         print("%s风扇:%s，辅助CPU散热。" % (indent, self._name) )
 
 
-class Displayer(Component):
+class Displayer(ComputerComponent):
     """"显示器"""
 
     def __init__(self, name):
@@ -97,7 +97,7 @@ class Displayer(Component):
         print("%s显示器:%s，负责内容的显示。" % (indent, self._name) )
 
 
-class Composite(Component):
+class ComputerComposite(ComputerComponent):
     """配件组合器"""
 
     def __init__(self, name):
@@ -132,7 +132,7 @@ class Composite(Component):
             element.shutdown(indent)
 
 
-class Mainboard(Composite):
+class Mainboard(ComputerComposite):
     """主板"""
 
     def __init__(self, name):
@@ -143,7 +143,7 @@ class Mainboard(Composite):
         super().showInfo(indent)
 
 
-class ComputerCase(Composite):
+class ComputerCase(ComputerComposite):
     """机箱"""
 
     def __init__(self, name):
@@ -154,7 +154,7 @@ class ComputerCase(Composite):
         super().showInfo(indent)
 
 
-class Computer(Composite):
+class Computer(ComputerComposite):
     """电脑"""
 
     def __init__(self, name):
@@ -170,9 +170,123 @@ class Computer(Composite):
 # 代码框架
 #==============================
 
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
+class Component(metaclass=ABCMeta):
+    """组件"""
+
+    def __init__(self, name):
+        self._name = name
+
+    def getName(self):
+        return self._name
+
+    def isComposite(self):
+        return False
+
+    @abstractmethod
+    def feature(self, indent):
+        # indent 仅用于内容输出时的缩进
+        pass
+
+class Composite(Component):
+    """复合组件"""
+
+    def __init__(self, name):
+        super().__init__(name)
+        self._components = []
+
+    def addComponent(self, component):
+        self._components.append(component)
+
+    def removeComponent(self, component):
+        self._components.remove(component)
+
+    def isComposite(self):
+        return True
+
+    def feature(self, indent):
+        indent += "\t"
+        for component in self._components:
+            print(indent, end="")
+            component.feature(indent)
+
+
+
+class ComponentImplA(Component):
+    "Test"
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def feature(self):
+        print("name：%s" % self._name)
+
 
 # 基于框架的实现
 #==============================
+import os
+# 引入 os 模块
+
+class FileDetail(Component):
+    """谇详情"""
+    def __init__(self, name):
+        super().__init__(name)
+        self._size = 0
+
+    def setSize(self, size):
+        self._size = size
+
+    def getFileSize(self):
+        return self._size
+
+    def feature(self, indent):
+        # 文件大小，单位：KB，精确度：2位小数
+        fileSize = round(self._size / float(1024), 2)
+        print("文件名称：%s， 文件大小：%sKB" % (self._name, fileSize) )
+
+
+class FolderDetail(Composite):
+    """文件夹详情"""
+
+    def __init__(self, name):
+        super().__init__(name)
+        self._count = 0
+
+    def setCount(self, fileNum):
+        self._count = fileNum
+
+    def getCount(self):
+        return self._count
+
+    def feature(self, indent):
+        print("文件夹名：%s， 文件数量：%d。包含的文件：" % (self._name, self._count) )
+        super().feature(indent)
+
+
+def scanDir(rootPath, folderDetail):
+    """扫描某一文件夹下的所有目录"""
+    if not os.path.isdir(rootPath):
+        raise ValueError("rootPath不是有效的路径：%s" % rootPath)
+
+    if folderDetail is None:
+        raise ValueError("folderDetail不能为空!")
+
+
+    fileNames = os.listdir(rootPath)
+    for fileName in fileNames:
+        filePath = os.path.join(rootPath, fileName)
+        if os.path.isdir(filePath):
+            folder = FolderDetail(fileName)
+            scanDir(filePath, folder)
+            folderDetail.addComponent(folder)
+        else:
+            fileDetail = FileDetail(fileName)
+            fileDetail.setSize(os.path.getsize(filePath))
+            folderDetail.addComponent(fileDetail)
+            folderDetail.setCount(folderDetail.getCount() + 1)
+
 
 
 # Test
@@ -199,4 +313,25 @@ def testComputer():
     print("\n关机过程:")
     computer.shutdown("")
 
-testComputer()
+
+def testComposite():
+    tony = ComponentImplA("Tony")
+    tony.feature()
+    karry = ComponentImplA("Karry")
+    composite = Composite("Composite")
+    composite.addComponent(tony)
+    composite.addComponent(karry)
+    composite.feature()
+
+
+def testDir():
+    folder = FolderDetail("生活中的设计模式")
+    scanDir("E:\生活中的设计模式", folder)
+    folder.feature("")
+
+    # isDir = os.path.isfile("D:\Test\file1.txt")
+    # print(isDir)
+
+# testComputer()
+# testComposite()
+testDir()
