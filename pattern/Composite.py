@@ -4,12 +4,16 @@
 
 # Version 1.0
 #=======================================================================================================================
-class Component:
-    "组件，所有子配件的基类"
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
+class Component(metaclass=ABCMeta):
+    """组件，所有子配件的基类"""
 
     def __init__(self, name):
         self._name = name
 
+    @abstractmethod
     def showInfo(self, indent = ""):
         pass
 
@@ -17,98 +21,91 @@ class Component:
         return False
 
     def startup(self, indent = ""):
-        print(indent + self._name + " 准备开始工作...")
+        print("%s%s 准备开始工作..." % (indent, self._name) )
 
     def shutdown(self, indent = ""):
-        print(indent + self._name + " 即将结束工作...")
+        print("%s%s 即将结束工作..." % (indent, self._name) )
 
 
 class CPU(Component):
-    "中央处理器"
+    """中央处理器"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("CPU:" + self._name + ",可以进行高速计算。")
+        print("%sCPU:%s,可以进行高速计算。" % (indent, self._name))
 
 
 class MemoryCard(Component):
-    "内存条"
+    """内存条"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("内存:" + self._name + ",可以缓存数据，读写速度快。")
+        print("%s内存:%s,可以缓存数据，读写速度快。" % (indent, self._name))
 
 
 class HardDisk(Component):
-    "硬盘"
+    """硬盘"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("硬盘:" + self._name + ",可以永久存储数据，容量大。")
+        print("%s硬盘:%s,可以永久存储数据，容量大。" % (indent, self._name) )
 
 
 class GraphicsCard(Component):
-    "显卡"
+    """显卡"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("显卡:" + self._name + ",可以高速计算和处理图形图像。")
+        print("%s显卡:%s,可以高速计算和处理图形图像。" % (indent, self._name) )
 
 
 class Battery(Component):
-    "电源"
+    """电源"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("电源:" + self._name + ",可以持续给主板和外接配件供电。")
+        print("%s电源:%s,可以持续给主板和外接配件供电。" % (indent, self._name) )
 
 
 class Fan(Component):
-    "风扇"
+    """风扇"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("风扇:" + self._name + "，辅助CPU散热。")
+        print("%s风扇:%s，辅助CPU散热。" % (indent, self._name) )
 
 
 class Displayer(Component):
-    "显示器"
+    """"显示器"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def showInfo(self, indent):
-        print(indent, end="")
-        print("显示器:" + self._name + "，负责内容的显示。")
+        print("%s显示器:%s，负责内容的显示。" % (indent, self._name) )
 
 
 class Composite(Component):
-    "配件组合器"
+    """配件组合器"""
 
     def __init__(self, name):
         super().__init__(name)
         self._components = []
 
     def showInfo(self, indent):
-        print(self._name + ",由以下部件组成:")
+        print("%s,由以下部件组成:" % (self._name) )
         indent += "\t"
         for element in self._components:
             element.showInfo(indent)
@@ -129,14 +126,14 @@ class Composite(Component):
             element.startup(indent)
 
     def shutdown(self, indent):
-        super().startup(indent)
+        super().shutdown(indent)
         indent += "\t"
         for element in self._components:
             element.shutdown(indent)
 
 
 class Mainboard(Composite):
-    "主板"
+    """主板"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -147,7 +144,7 @@ class Mainboard(Composite):
 
 
 class ComputerCase(Composite):
-    "机箱"
+    """机箱"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -158,7 +155,7 @@ class ComputerCase(Composite):
 
 
 class Computer(Composite):
-    "电脑"
+    """电脑"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -181,28 +178,20 @@ class Computer(Composite):
 # Test
 #=======================================================================================================================
 def testComputer():
-    cpu = CPU("Intel Core i5-6600K")
-    memoryCard = MemoryCard("Kingston Fury DDR4")
-    hardDisk = HardDisk("Kingston V300 ")
-    graphicsCard = GraphicsCard("Colorful iGame750")
     mainBoard = Mainboard("GIGABYTE Z170M M-ATX")
-    mainBoard.addComponent(cpu)
-    mainBoard.addComponent(memoryCard)
-    mainBoard.addComponent(hardDisk)
-    mainBoard.addComponent(graphicsCard)
+    mainBoard.addComponent(CPU("Intel Core i5-6600K"))
+    mainBoard.addComponent(MemoryCard("Kingston Fury DDR4"))
+    mainBoard.addComponent(HardDisk("Kingston V300 "))
+    mainBoard.addComponent(GraphicsCard("Colorful iGame750"))
 
-    battery = Battery("Antec VP 450P")
-    fan = Fan("DEEPCOOL 120T")
     computerCase = ComputerCase("SAMA MATX")
-    computerCase.addComponent(battery)
     computerCase.addComponent(mainBoard)
-    computerCase.addComponent(fan)
-
-    displayer = Displayer("AOC LV243XIP")
+    computerCase.addComponent(Battery("Antec VP 450P"))
+    computerCase.addComponent(Fan("DEEPCOOL 120T"))
 
     computer = Computer("Tony DIY电脑")
-    computer.addComponent(displayer)
     computer.addComponent(computerCase)
+    computer.addComponent(Displayer("AOC LV243XIP"))
 
     computer.showInfo("")
     print("\n开机过程:")
