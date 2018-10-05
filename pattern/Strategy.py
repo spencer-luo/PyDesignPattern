@@ -4,41 +4,46 @@
 
 # Version 1.0
 #=======================================================================================================================
-class IVehicle:
-    "交通工具的抽象类"
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
+class IVehicle(metaclass=ABCMeta):
+    """交通工具的抽象类"""
+
+    @abstractmethod
     def running(self):
         pass
 
+
 class SharedBicycle(IVehicle):
-    "共享单车"
+    """共享单车"""
 
     def running(self):
         print("骑共享单车(轻快便捷)", end='')
 
 
 class ExpressBus(IVehicle):
-    "快速公交"
+    """快速公交"""
 
     def running(self):
         print("坐快速公交(经济绿色)", end='')
 
 class Express(IVehicle):
-    "快车"
+    """快车"""
 
     def running(self):
         print("打快车(快速方便)", end='')
 
 
 class Subway(IVehicle):
-    "地铁"
+    """地铁"""
 
     def running(self):
         print("坐地铁(高效安全)", end='')
 
 
 class Classmate:
-    "参加聚餐的同学"
+    """参加聚餐的同学"""
 
     def __init__(self, name, vechicle):
         self.__name = name
@@ -54,8 +59,11 @@ class Classmate:
 #=======================================================================================================================
 # 代码框架
 #==============================
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
 class Person:
-    "人类"
+    """人类"""
 
     def __init__(self, name, age, weight, height):
         self.name = name
@@ -64,35 +72,41 @@ class Person:
         self.height = height
 
     def showMysef(self):
-        print(self.name + " " + str(self.age) + " years old, " + str(self.weight) + "kg, " + str(self.height) + "m.")
+        print("%s 年龄：%d岁，体重：%0.2fkg，身高：%0.2fm" % (self.name, self.age, self.weight, self.height) )
 
-class ICompare:
-    "比较算法"
 
+class ICompare(metaclass=ABCMeta):
+    """比较算法"""
+
+    @abstractmethod
     def comparable(self, person1, person2):
         "person1 > person2 返回值>0，person1 == person2 返回0， person1 < person2 返回值小于0"
         pass
 
 
 class CompareByAge(ICompare):
-    "通过年龄排序"
+    """通过年龄排序"""
 
     def comparable(self, person1, person2):
         return person1.age - person2.age
 
+
 class CompareByHeight(ICompare):
-    "通过身高进行排序"
+    """通过身高进行排序"""
 
     def comparable(self, person1, person2):
         return person1.height - person2.height
 
+
 class CompareByHeightAndWeight(ICompare):
-    "根据身高和体重的综合情况来排序(身高和体重的权重分别是0.6和0.4)"
+    """根据身高和体重的综合情况来排序
+    (身高和体重的权重分别是0.6和0.4)"""
 
     def comparable(self, person1, person2):
         value1 = person1.height * 0.6 + person1.weight * 0.4
         value2 = person2.height * 0.6 + person2.weight * 0.4
         return value1 - value2
+
 
 class SortPerson:
     "Person的排序类"
@@ -101,7 +115,8 @@ class SortPerson:
         self.__compare = compare
 
     def sort(self, personList):
-        "排序算法，这里采用最简单的冒泡排序"
+        """排序算法
+        这里采用最简单的冒泡排序"""
         n = len(personList)
         for i in range(0, n-1):
             for j in range(0, n-i-1):
@@ -126,8 +141,7 @@ def testTheDinner():
     joe.attendTheDinner()
     helen = Classmate("Helen", Subway())
     helen.attendTheDinner()
-    # henry = Classmate("Henry", ExpressBus())
-    henry = Classmate("Henry", Express())
+    henry = Classmate("Henry", ExpressBus())
     henry.attendTheDinner()
     ruby = Classmate("Ruby", Express())
     ruby.attendTheDinner()
@@ -142,25 +156,25 @@ def testSortPerson():
         Person("Eric", 23, 62.0, 1.78),
         Person("Helen", 16, 45.7, 1.60)
     ]
-    sorter0 = SortPerson(CompareByAge())
-    sorter0.sort(personList)
+    ageSorter = SortPerson(CompareByAge())
+    ageSorter.sort(personList)
     print("根据年龄进行排序后的结果：")
     for person in personList:
         person.showMysef()
     print()
 
-    sorter1 = SortPerson(CompareByHeight())
-    sorter1.sort(personList)
+    heightSorter = SortPerson(CompareByHeight())
+    heightSorter.sort(personList)
     print("根据身高进行排序后的结果：")
     for person in personList:
         person.showMysef()
     print()
 
-    sorter1 = SortPerson(CompareByHeightAndWeight())
-    sorter1.sort(personList)
-    print("根据身高和体重进行排序后的结果：")
-    for person in personList:
-        person.showMysef()
+    # heightWeightSorter = SortPerson(CompareByHeightAndWeight())
+    # heightWeightSorter.sort(personList)
+    # print("根据身高和体重进行排序后的结果：")
+    # for person in personList:
+    #     person.showMysef()
 
 
 
