@@ -4,9 +4,11 @@
 
 # Version 1.0
 #=======================================================================================================================
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
-class Coffee:
-    "咖啡"
+class Coffee(metaclass=ABCMeta):
+    """咖啡"""
 
     def __init__(self, name):
         self.__name = name
@@ -14,41 +16,41 @@ class Coffee:
     def getName(self):
         return self.__name
 
+    @abstractmethod
     def getTaste(self):
         pass
 
 
 class CaffeLatte(Coffee):
-    "拿铁咖啡"
+    """拿铁咖啡"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def getTaste(self):
-        return "轻柔而香醇。"
+        return "轻柔而香醇"
 
 class MochaCoffee(Coffee):
-    "摩卡咖啡"
+    """摩卡咖啡"""
 
     def __init__(self, name):
         super().__init__(name)
 
     def getTaste(self):
-        return "丝滑与醇厚。"
+        return "丝滑与醇厚"
 
 class Coffeemaker:
-    "咖啡机"
+    """咖啡机"""
 
     @staticmethod
     def makeCoffee(coffeeBean):
         "通过staticmethod装饰器修饰来定义一个静态方法"
-        coffee = None
-        if(coffeeBean == "拿铁风味咖啡豆"):
+        if(coffeeBean == "拿铁咖啡豆"):
             coffee = CaffeLatte("拿铁咖啡")
-        elif(coffeeBean == "摩卡风味咖啡豆"):
+        elif(coffeeBean == "摩卡咖啡豆"):
             coffee = MochaCoffee("摩卡咖啡")
         else:
-            coffee = Coffee("")
+            raise ValueError("不支持的参数：%s" % coffeeBean)
         return coffee
 
 
@@ -143,10 +145,10 @@ class PenFactory:
 # Test
 #=======================================================================================================================
 def testCoffeeMaker():
-    latte = Coffeemaker.makeCoffee("拿铁风味咖啡豆")
-    print(latte.getName(), "已为您准备好了，口感：" + latte.getTaste() + "请慢慢享用！")
-    mocha = Coffeemaker.makeCoffee("摩卡风味咖啡豆")
-    print(mocha.getName(), "已为您准备好了，口感：" + mocha.getTaste() + "请慢慢享用！")
+    latte = Coffeemaker.makeCoffee("拿铁咖啡豆")
+    print("%s已为您准备好了，口感：%s。请慢慢享用！" % (latte.getName(), latte.getTaste()) )
+    mocha = Coffeemaker.makeCoffee("摩卡咖啡豆")
+    print("%s已为您准备好了，口感：%s。请慢慢享用！" % (mocha.getName(), mocha.getTaste()))
 
 
 def testPenFactory():
@@ -161,5 +163,5 @@ def testPenFactory():
     print("创建了 " + ellipsePen.getName() + ", 对象id：" + str(id(ellipsePen)))
 
 
-# testCoffeeMaker()
-testPenFactory()
+testCoffeeMaker()
+# testPenFactory()
