@@ -21,7 +21,7 @@ class Coffee(metaclass=ABCMeta):
         pass
 
 
-class CaffeLatte(Coffee):
+class LatteCaffe(Coffee):
     """拿铁咖啡"""
 
     def __init__(self, name):
@@ -46,7 +46,7 @@ class Coffeemaker:
     def makeCoffee(coffeeBean):
         "通过staticmethod装饰器修饰来定义一个静态方法"
         if(coffeeBean == "拿铁咖啡豆"):
-            coffee = CaffeLatte("拿铁咖啡")
+            coffee = LatteCaffe("拿铁咖啡")
         elif(coffeeBean == "摩卡咖啡豆"):
             coffee = MochaCoffee("摩卡咖啡")
         else:
@@ -59,23 +59,25 @@ class Coffeemaker:
 #=======================================================================================================================
 # 代码框架
 #==============================
-
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 from enum import Enum
 # Python3.4 之后支持枚举Enum的语法
 
 class PenType(Enum):
-    "画笔类型"
+    """画笔类型"""
     PenTypeLine = 1
     PenTypeRect = 2
     PenTypeEllipse = 3
 
 
-class Pen:
-    "画笔"
+class Pen(metaclass=ABCMeta):
+    """画笔"""
 
     def __init__(self, name):
         self.__name = name
 
+    @abstractmethod
     def getType(self):
         pass
 
@@ -84,7 +86,7 @@ class Pen:
 
 
 class LinePen(Pen):
-    "直线画笔"
+    """直线画笔"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -93,7 +95,7 @@ class LinePen(Pen):
         return PenType.PenTypeLine
 
 class RectanglePen(Pen):
-    "矩形画笔"
+    """矩形画笔"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -103,7 +105,7 @@ class RectanglePen(Pen):
 
 
 class EllipsePen(Pen):
-    "椭圆画笔"
+    """椭圆画笔"""
 
     def __init__(self, name):
         super().__init__(name)
@@ -113,14 +115,14 @@ class EllipsePen(Pen):
 
 
 class PenFactory:
-    "画笔工厂类"
+    """画笔工厂类"""
 
     def __init__(self):
         "定义一个字典(key:PenType，value：Pen)来存放对象,确保每一个类型只会有一个对象"
         self.__pens = {}
 
     def getSingleObj(self, penType, name):
-        "获得唯一实例的对象"
+        """获得唯一实例的对象"""
         if (self.__pens.get(penType) is None):
             # 如果该对象不存在，则创建一个对象并存到字典中
             self.__pens[penType] = LinePen(name)
@@ -128,14 +130,14 @@ class PenFactory:
         return self.__pens[penType]
 
     def createPen(self, penType):
-        "创建画笔"
+        """创建画笔"""
         # Python中没有switch/case的语法，我们通过字典来来模拟switch/case的实现方式
         switcher = {
             PenType.PenTypeLine : self.getSingleObj(PenType.PenTypeLine, "直线画笔"),
             PenType.PenTypeRect : self.getSingleObj(PenType.PenTypeRect, "矩形画笔"),
             PenType.PenTypeEllipse : self.getSingleObj(PenType.PenTypeEllipse, "椭圆画笔"),
         }
-        return switcher.get(penType, "create pen error")
+        return switcher.get(penType, Exception("创建对象失败"))
 
 
 # 基于框架的实现
@@ -154,14 +156,14 @@ def testCoffeeMaker():
 def testPenFactory():
     factory = PenFactory()
     linePen = factory.createPen(PenType.PenTypeLine)
-    print("创建了 " + linePen.getName() + ", 对象id：" + str(id(linePen)))
+    print("创建了 %s，对象id：%s" % (linePen.getName(), id(linePen)) )
     rectPen = factory.createPen(PenType.PenTypeRect)
-    print("创建了 " + rectPen.getName() + ", 对象id："+ str(id(rectPen)))
+    print("创建了 %s，对象id：%s" % (rectPen.getName(), id(rectPen)))
     rectPen2 = factory.createPen(PenType.PenTypeRect)
-    print("创建了 " + rectPen2.getName() + ", 对象id：" + str(id(rectPen2)))
+    print("创建了 %s，对象id：%s" % (rectPen2.getName(), id(rectPen2)))
     ellipsePen = factory.createPen(PenType.PenTypeEllipse)
-    print("创建了 " + ellipsePen.getName() + ", 对象id：" + str(id(ellipsePen)))
+    print("创建了 %s，对象id：%s" % (ellipsePen.getName(), id(ellipsePen)))
 
 
-testCoffeeMaker()
-# testPenFactory()
+# testCoffeeMaker()
+testPenFactory()
