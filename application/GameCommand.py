@@ -4,14 +4,18 @@
 # Date: 5/18/2018
 
 from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 import time
+# 引入time模块进行时间的控制
 
 class GameRole:
+    """游戏的角色"""
 
     # 每次移动的步距
     STEP = 5
 
-    def __init__(self):
+    def __init__(self, name):
+        self.__name = name
         self.__x = 0
         self.__y = 0
         self.__z = 0
@@ -35,13 +39,13 @@ class GameRole:
         self.__z -= self.STEP
 
     def attack(self):
-        print("攻击...")
+        print("%s发动攻击..." % self.__name)
 
     def showPosition(self):
-        print("x:" + str(self.__x) + ", y:" + str(self.__y) + ", z:" + str(self.__z))
+        print("%s的位置：(x:%s, y:%s, z:%s)" % (self.__name, self.__x, self.__y, self.__z) )
 
 class GameCommand(metaclass=ABCMeta):
-    "游戏角色的命令类"
+    """游戏角色的命令类"""
 
     def __init__(self, role):
         self._role = role
@@ -54,28 +58,28 @@ class GameCommand(metaclass=ABCMeta):
         pass
 
 class Left(GameCommand):
-    "左移命令"
+    """左移命令"""
 
     def execute(self):
         self._role.leftMove()
         self._role.showPosition()
 
 class Right(GameCommand):
-    "右移命令"
+    """右移命令"""
 
     def execute(self):
         self._role.rightMove()
         self._role.showPosition()
 
 class Up(GameCommand):
-    "上移命令"
+    """上移命令"""
 
     def execute(self):
         self._role.upMove()
         self._role.showPosition()
 
 class Down(GameCommand):
-    "下移命令"
+    """下移命令"""
 
     def execute(self):
         self._role.downMove()
@@ -83,7 +87,7 @@ class Down(GameCommand):
 
 
 class Jump(GameCommand):
-    "弹跳命令"
+    """弹跳命令"""
 
     def execute(self):
         self._role.jumpMove()
@@ -92,7 +96,7 @@ class Jump(GameCommand):
         time.sleep(0.5)
 
 class Squat(GameCommand):
-    "下蹲命令"
+    """下蹲命令"""
 
     def execute(self):
         self._role.squatMove()
@@ -102,12 +106,13 @@ class Squat(GameCommand):
 
 
 class Attack(GameCommand):
-    "攻击命令"
+    """攻击命令"""
 
     def execute(self):
         self._role.attack()
 
 class MacroCommand(GameCommand):
+    """宏命令，也就是组合命令"""
 
     def __init__(self, role = None):
         super().__init__(role)
@@ -115,7 +120,6 @@ class MacroCommand(GameCommand):
 
     def addCommand(self, command):
         # 让所有的命令作用于同一个对象
-        # command.setRole(self._role)
         self.__commands.append(command)
 
     def removeCommand(self, command):
@@ -126,6 +130,8 @@ class MacroCommand(GameCommand):
             command.execute()
 
 class GameInvoker:
+    """命令调度者"""
+
     def __init__(self):
         self.__command = None
 
@@ -138,7 +144,8 @@ class GameInvoker:
             self.__command.execute()
 
 def testGame():
-    role = GameRole()
+    """在控制台用字符来模拟命令"""
+    role = GameRole("常山赵子龙")
     invoker = GameInvoker()
     while True:
         strCmd = input("请输入命令：");
@@ -206,6 +213,5 @@ def testGame():
             invoker.setCommand(cmd).action()
         elif (strCmd == "Q"):
             exit()
-
 
 testGame()
