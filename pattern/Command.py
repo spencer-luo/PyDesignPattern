@@ -8,18 +8,18 @@ from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class Chef():
-    "厨师"
+    """厨师"""
 
     def steamFood(self, originalMaterial):
-        print(originalMaterial + "清蒸中...")
+        print("%s清蒸中..." % originalMaterial)
         return "清蒸" + originalMaterial
 
     def stirFriedFood(self, originalMaterial):
-        print(originalMaterial + "爆炒中...")
+        print("%s爆炒中..." % originalMaterial)
         return "香辣炒" + originalMaterial
 
 class Order(metaclass=ABCMeta):
-    "订单"
+    """订单"""
 
     def __init__(self, name, originalMaterial):
         self._chef = Chef()
@@ -34,7 +34,7 @@ class Order(metaclass=ABCMeta):
         pass
 
 class SteamedOrder(Order):
-    "清蒸"
+    """清蒸"""
 
     def __init__(self, originalMaterial):
         super().__init__("清蒸", originalMaterial)
@@ -46,7 +46,7 @@ class SteamedOrder(Order):
 
 
 class SpicyOrder(Order):
-    "香辣炒"
+    """香辣炒"""
 
     def __init__(self, originalMaterial):
         super().__init__("香辣炒", originalMaterial)
@@ -58,7 +58,7 @@ class SpicyOrder(Order):
 
 
 class Waiter:
-    "服务员"
+    """服务员"""
 
     def __init__(self, name):
         self.__name = name
@@ -66,11 +66,11 @@ class Waiter:
 
     def receiveOrder(self, order):
         self.__order = order
-        print("服务员" + self.__name + "：您的 " + order.getDisplayName() + " 订单已经收到,请耐心等待")
+        print("服务员%s：您的 %s 订单已经收到,请耐心等待" % (self.__name, order.getDisplayName()) )
 
     def placeOrder(self):
         food = self.__order.processingOrder()
-        print("服务员" + self.__name + "：您的餐 " + food + " 已经准备好，请您慢用!")
+        print("服务员%s：您的餐 %s 已经准备好，请您慢用!" % (self.__name, food) )
 
 
 
@@ -86,15 +86,18 @@ class Waiter:
 #=======================================================================================================================
 # 代码框架
 #==============================
+from abc import ABCMeta, abstractmethod
+# 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
+
 class Command(metaclass=ABCMeta):
-    "命令的抽象类"
+    """命令的抽象类"""
 
     @abstractmethod
     def execute(self):
         pass
 
 class CommandImpl(Command):
-    "命令的具体实现类"
+    """命令的具体实现类"""
 
     def __init__(self, receiver):
         self.__receiver = receiver
@@ -103,13 +106,13 @@ class CommandImpl(Command):
         self.__receiver.doSomething()
 
 class Receiver:
-    "命令的接收者"
+    """命令的接收者"""
 
     def doSomething(self):
         print("do something...")
 
 class Invoker:
-    "调度者"
+    """调度者"""
 
     def __init__(self):
         self.__command = None
@@ -121,11 +124,6 @@ class Invoker:
         if self.__command is not None:
             self.__command.execute()
 
-def client():
-    invoker = Invoker()
-    command = CommandImpl(Receiver())
-    invoker.setCommand(command)
-    invoker.action()
 
 # 基于框架的实现
 #==============================
@@ -136,16 +134,24 @@ def client():
 def testOrder():
     waiter = Waiter("Anna")
     steamedOrder = SteamedOrder("大闸蟹")
-    print("客户David：我要一份" + steamedOrder.getDisplayName())
+    print("客户David：我要一份 %s" % steamedOrder.getDisplayName())
     waiter.receiveOrder(steamedOrder)
     waiter.placeOrder()
     print()
 
     spicyOrder = SpicyOrder("大闸蟹")
-    print("客户Tony：我要一份" + steamedOrder.getDisplayName())
+    print("客户Tony：我要一份 %s" % spicyOrder.getDisplayName())
     waiter.receiveOrder(spicyOrder)
     waiter.placeOrder()
 
+
+def client():
+    invoker = Invoker()
+    command = CommandImpl(Receiver())
+    invoker.setCommand(command)
+    invoker.action()
+
+
 # testOrder()
-# client()
+client()
 
