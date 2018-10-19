@@ -5,7 +5,7 @@
 # Version 1.0
 #=======================================================================================================================
 class Engineer:
-    "工程师"
+    """工程师"""
 
     def __init__(self, name):
         self.__name = name
@@ -19,12 +19,14 @@ class Engineer:
         print(self.__name + "工作太忙了，都忘记要做什么了！")
 
     def writeTodoList(self):
+        """将工作项记录TodoList"""
         todoList = TodoList()
         for item in self.__workItems:
             todoList.writeWorkItem(item)
         return todoList
 
     def retrospect(self, todoList):
+        """回忆工作项"""
         self.__workItems = todoList.getWorkItems()
         print(self.__name + "想起要做什么了！")
 
@@ -38,7 +40,7 @@ class Engineer:
 
 
 class TodoList:
-    "工作项"
+    """工作项"""
 
     def __init__(self):
         self.__workItems = []
@@ -51,7 +53,7 @@ class TodoList:
 
 
 class TodoListCaretaker:
-    "TodoList管理类"
+    """TodoList管理类"""
 
     def __init__(self):
         self.__todoList = None
@@ -62,6 +64,7 @@ class TodoListCaretaker:
     def getTodoList(self):
         return self.__todoList
 
+
 # Version 2.0
 #=======================================================================================================================
 # 代码框架
@@ -69,19 +72,19 @@ class TodoListCaretaker:
 from copy import deepcopy
 
 class Memento:
-    "备忘录"
+    """备忘录"""
 
-    def setAttribute(self, dict):
-        "深度拷贝字典dict中的所有属性"
+    def setAttributes(self, dict):
+        """深度拷贝字典dict中的所有属性"""
         self.__dict__ = deepcopy(dict)
 
-    def getAttribute(self):
-        "获取属性字典"
+    def getAttributes(self):
+        """获取属性字典"""
         return self.__dict__
 
 
 class Caretaker:
-    "备忘录管理类"
+    """备忘录管理类"""
 
     def __init__(self):
         self._mementos = {}
@@ -93,15 +96,15 @@ class Caretaker:
         return self._mementos[name]
 
 class Originator:
-    "备份发起人"
+    """备份发起人"""
 
     def createMemento(self):
         memento = Memento()
-        memento.setAttribute(self.__dict__)
+        memento.setAttributes(self.__dict__)
         return memento
 
     def restoreFromMemento(self, memento):
-        self.__dict__.update(memento.getAttribute())
+        self.__dict__.update(memento.getAttributes())
 
 
 # 基于框架的实现
@@ -127,4 +130,4 @@ def testEngineer():
     tony.retrospect(caretaker.getTodoList())
     tony.showWorkItem()
 
-testEngineer()
+# testEngineer()

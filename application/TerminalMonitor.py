@@ -4,9 +4,10 @@
 
 # 引入升级版备忘录模式关键类
 from pattern.Memento import Originator, Caretaker, Memento
+import logging
 
 class TerminalCmd(Originator):
-    "终端命令"
+    """终端命令"""
 
     def __init__(self, text):
         self.__cmdName = ""
@@ -14,7 +15,7 @@ class TerminalCmd(Originator):
         self.parseCmd(text)
 
     def parseCmd(self, text):
-        "从字符串中解析命令"
+        """从字符串中解析命令"""
         subStrs = self.getArgumentsFromString(text, " ")
         # 获取第一个字段作为命令名称
         if(len(subStrs) > 0):
@@ -25,10 +26,10 @@ class TerminalCmd(Originator):
             self.__cmdArgs = subStrs[1:]
 
     def getArgumentsFromString(self, str, splitFlag):
-        "通过splitFlag进行分割，获得参数数组."
+        """通过splitFlag进行分割，获得参数数组"""
 
         if (splitFlag == ""):
-            print("splitFlag is empty!")
+            logging.warning("splitFlag 为空!")
             return ""
 
         data = str.split(splitFlag)
@@ -44,10 +45,10 @@ class TerminalCmd(Originator):
         print(self.__cmdName, self.__cmdArgs)
 
 class TerminalCaretaker(Caretaker):
-    "终端的备忘录管理类"
+    """终端命令的备忘录管理类"""
 
     def showHistoryCmds(self):
-        "显示历史命令"
+        """显示历史命令"""
         for key, obj in self._mementos.items():
             name = ""
             value = []
@@ -55,7 +56,7 @@ class TerminalCaretaker(Caretaker):
                 name = obj._TerminalCmd__cmdName
             if(obj._TerminalCmd__cmdArgs):
                 value = obj._TerminalCmd__cmdArgs
-            print("第" + str(key) + "条命令: " + str(name) + " " + str(value))
+            print("第%s条命令: %s %s" % (key, name, value) )
 
 
 def testTerminal():
