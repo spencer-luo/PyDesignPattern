@@ -5,9 +5,10 @@
 # Version 1.0
 #=======================================================================================================================
 import logging
+# 引入logging模块记录异常
 
 class Pigment:
-    "颜料"
+    """颜料"""
 
     def __init__(self, color):
         self.__color = color
@@ -21,10 +22,10 @@ class Pigment:
         return self
 
     def showInfo(self):
-        print(self.__user + "取得" + self.__color + "色颜料")
+        print("%s 取得 %s色颜料"  % (self.__user, self.__color) )
 
 class PigmengFactory:
-    "资料的工厂类"
+    """资料的工厂类"""
 
     def __init__(self):
         self.__sigmentSet = {
@@ -50,23 +51,23 @@ from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class Flyweight(metaclass=ABCMeta):
-    "享元类"
+    """享元类"""
 
     @abstractmethod
     def operation(self, extrinsicState):
         pass
 
 class FlyweightImpl(Flyweight):
-    "享元类的具体实现类"
+    """享元类的具体实现类"""
 
     def __init__(self, color):
         self.__color = color
 
     def operation(self, extrinsicState):
-        print(extrinsicState + "取得" + self.__color + "色颜料")
+        print("%s 取得 %s色颜料" % (extrinsicState, self.__color))
 
 class FlyweightFactory:
-    "享元工厂"
+    """享元工厂"""
 
     def __init__(self):
         self.__flyweights = {}
@@ -95,7 +96,7 @@ def testPigment():
     pigmentBlue2.showInfo()
 
 
-def testPigment2():
+def testFlyweight():
     factory = FlyweightFactory()
     pigmentRed = factory.getFlyweight("红")
     pigmentRed.operation("梦之队")
@@ -112,5 +113,5 @@ def testPigment2():
 
 
 
-testPigment()
-# testPigment2()
+# testPigment()
+testFlyweight()
