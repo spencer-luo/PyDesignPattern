@@ -8,35 +8,37 @@
 # # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 #
 # class DesignPatternBook:
-#     "《从生活的角度解读设计模式》一书"
+#     """《从生活的角度解读设计模式》一书"""
 #     def getName(self):
 #         return "《从生活的角度解读设计模式》"
 #
 #
 # class Reader(metaclass=ABCMeta):
-#     "访问者，也就是读者"
+#     """访问者，也就是读者"""
 #
 #     @abstractmethod
 #     def read(self, book):
 #         pass
 #
 # class Engineer(Reader):
+#     """工程师"""
 #
 #     def read(self, book):
-#         print("技术狗读" + book.getName() + "一书后的感受：能抓住模式的核心思想，深入浅出，很有见地！")
+#         print("技术狗读%s一书后的感受：能抓住模式的核心思想，深入浅出，很有见地！" % book.getName())
 #
 #
 # class ProductManager(Reader):
-#     "产品经理"
+#     """产品经理"""
 #
 #     def read(self, book):
-#         print("产品经理读" + book.getName() + "一书后的感受：配图非常有趣，文章很有层次感！")
+#         print("产品经理读%s一书后的感受：配图非常有趣，文章很有层次感！" % book.getName())
 #
 # class OtherFriend(Reader):
-#     "IT圈外的朋友"
+#     """IT圈外的朋友"""
 #
 #     def read(self, book):
-#         print("IT圈外的朋友读" + book.getName() + "一书后的感受：技术的内容一脸蒙蔽，但故事很精彩，像是看小说或是故事集！")
+#         print("IT圈外的朋友读%s一书后的感受：技术的内容一脸懵逼，但故事很精彩，像是看小说或是故事集！"
+#               % book.getName())
 
 # Version 2.0
 #=======================================================================================================================
@@ -46,23 +48,23 @@ from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class DataNode(metaclass=ABCMeta):
-    "数据结构类"
+    """数据结构类"""
 
     def accept(self, visitor):
-        "接受访问者的访问"
+        """接受访问者的访问"""
         visitor.visit(self)
 
 class Visitor(metaclass=ABCMeta):
-    "访问者"
+    """访问者"""
 
     @abstractmethod
     def visit(self, data):
-        "对数据对象的访问操作"
+        """对数据对象的访问操作"""
         pass
 
 
 class ObjectStructure:
-    "数据结构的管理类，也是数据对象的一个容器，可遍历容器内的所有元素"
+    """数据结构的管理类，也是数据对象的一个容器，可遍历容器内的所有元素"""
 
     def __init__(self):
         self.__datas = []
@@ -71,37 +73,41 @@ class ObjectStructure:
         self.__datas.append(dataElement)
 
     def action(self, visitor):
-        "进行数据访问的操作"
+        """进行数据访问的操作"""
         for data in self.__datas:
-            visitor.visit(data)
+            data.accept(visitor)
 
 
 # 基于框架的实现
 #==============================
-class DesignPatternBook:
-    "《从生活的角度解读设计模式》一书"
+class DesignPatternBook(DataNode):
+    """《从生活的角度解读设计模式》一书"""
 
     def getName(self):
         return "《从生活的角度解读设计模式》"
 
 
 class Engineer(Visitor):
+    """工程师"""
 
     def visit(self, book):
-        print("技术狗读" + book.getName() + "一书后的感受：能抓住模式的核心思想，深入浅出，很有见地！")
+        print("技术狗读%s一书后的感受：能抓住模式的核心思想，深入浅出，很有见地！" % book.getName())
 
 
 class ProductManager(Visitor):
-    "产品经理"
+    """产品经理"""
 
     def visit(self, book):
-        print("产品经理读" + book.getName() + "一书后的感受：配图非常有趣，文章很有层次感！")
+        print("产品经理读%s一书后的感受：配图非常有趣，文章很有层次感！" % book.getName())
+
 
 class OtherFriend(Visitor):
-    "IT圈外的朋友"
+    """IT圈外的朋友"""
 
     def visit(self, book):
-        print("IT圈外的朋友读" + book.getName() + "一书后的感受：技术的内容一脸蒙蔽，但故事很精彩，像是看小说或是故事集！")
+        print("IT圈外的朋友读%s一书后的感受：技术的内容一脸懵逼，但故事很精彩，像是看小说或是故事集！"
+              % book.getName())
+
 
 # 实战
 # =======================================================================================================================
@@ -170,8 +176,9 @@ class GenderCounter(Visitor):
             print("Not support this type")
 
     def getInfo(self):
-        print(str(self.__maleCat) + "只雄猫，" + str(self.__femaleCat) + "只雌猫，"
-              + str(self.__maleDog) + "只雄狗，" + str(self.__femalDog) + "只雌狗。")
+        print("%d只雄猫，%d只雌猫，%d只雄狗，%d只雌狗。"
+              % (self.__maleCat, self.__femaleCat, self.__maleDog, self.__femalDog) )
+
 
 class WeightCounter(Visitor):
     """体重的统计"""
@@ -215,7 +222,7 @@ class AgeCounter(Visitor):
             print("Not support this type")
 
     def getInfo(self):
-        print("猫的最大年龄是：" + str(self.__catMaxAge) + "， 狗的最大年龄是：" + str(self.__dogMaxAge))
+        print("猫的最大年龄是：%s，狗的最大年龄是：%s" % (self.__catMaxAge, self.__dogMaxAge) )
 
 # Test
 #=======================================================================================================================
