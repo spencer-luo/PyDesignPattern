@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class Shape(metaclass=ABCMeta):
-    "形状"
+    """形状"""
 
     def __init__(self, color):
         self._color = color
@@ -22,7 +22,7 @@ class Shape(metaclass=ABCMeta):
 
 
 class Rectange(Shape):
-    "矩形"
+    """矩形"""
 
     def __init__(self, color):
         super().__init__(color)
@@ -31,7 +31,7 @@ class Rectange(Shape):
         return "矩形"
 
 class Ellipse(Shape):
-    "椭圆"
+    """椭圆"""
 
     def __init__(self, color):
         super().__init__(color)
@@ -40,7 +40,7 @@ class Ellipse(Shape):
         return "椭圆"
 
 class Color(metaclass=ABCMeta):
-    "颜色"
+    """颜色"""
 
     @abstractmethod
     def getColor(self):
@@ -48,14 +48,14 @@ class Color(metaclass=ABCMeta):
 
 
 class Red(Color):
-    "红色"
+    """红色"""
 
     def getColor(self):
         return "红色"
 
 
 class Green(Color):
-    "绿色"
+    """绿色"""
 
     def getColor(self):
         return "绿色"
