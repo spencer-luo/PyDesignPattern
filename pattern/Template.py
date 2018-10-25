@@ -2,13 +2,13 @@
 # Authoer: Spencer.Luo
 # Date: 7/8/2018
 
-# Version 1.0
+# Version 1.0 代码框架
 #=======================================================================================================================
 from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class Template(metaclass=ABCMeta):
-    "模板类(抽象类)"
+    """模板类(抽象类)"""
 
     @abstractmethod
     def stepOne(self):
@@ -23,14 +23,14 @@ class Template(metaclass=ABCMeta):
         pass
 
     def templateMethold(self):
-        "模板方法"
+        """模板方法"""
         self.stepOne()
         self.stepTwo()
         self.stepThree()
 
 
 class TemplateImplA(Template):
-    "模板实现类A"
+    """模板实现类A"""
 
     def stepOne(self):
         print("步骤一")
@@ -43,7 +43,7 @@ class TemplateImplA(Template):
 
 
 class TemplateImplB(Template):
-    "模板实现类B"
+    """模板实现类B"""
 
     def stepOne(self):
         print("Step one")
@@ -55,19 +55,13 @@ class TemplateImplB(Template):
         print("Step three")
 
 
-# Version 2.0
+# Version 2.0 阅读器视图
 #=======================================================================================================================
-# 代码框架
-#==============================
-
-
-# 基于框架的实现
-#==============================
 from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class ReaderView(metaclass=ABCMeta):
-    "阅读器视图"
+    """阅读器视图"""
 
     def __init__(self):
         self.__curPageNum = 1
@@ -77,28 +71,30 @@ class ReaderView(metaclass=ABCMeta):
         return "第" + str(pageNum) + "的内容"
 
     def prePage(self):
+        """模板方法，往前翻一页"""
         content = self.getPage(self.__curPageNum - 1)
         self._displayPage(content)
 
     def nextPage(self):
+        """模板方法，往后翻一页"""
         content = self.getPage(self.__curPageNum + 1)
         self._displayPage(content)
 
     @abstractmethod
     def _displayPage(self, content):
-        "翻页效果"
+        """翻页效果"""
         pass
 
 
 class SmoothView(ReaderView):
-    "左右平滑的视图"
+    """左右平滑的视图"""
 
     def _displayPage(self, content):
         print("左右平滑:" + content)
 
 
 class SimulationView(ReaderView):
-    "仿真翻页的视图"
+    """仿真翻页的视图"""
 
     def _displayPage(self, content):
         print("仿真翻页:" + content)
