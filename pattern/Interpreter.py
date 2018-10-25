@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 # 引入ABCMeta和abstractmethod来定义抽象类和抽象方法
 
 class Expression(metaclass=ABCMeta):
-    "抽象表达式"
+    """抽象表达式"""
 
     @abstractmethod
     def interpreter(self, var):
@@ -16,7 +16,7 @@ class Expression(metaclass=ABCMeta):
 
 
 class VarExpression(Expression):
-    "变量解析器"
+    """变量解析器"""
 
     def __init__(self, key):
         self.__key = key
@@ -26,7 +26,7 @@ class VarExpression(Expression):
 
 
 class SymbolExpression(Expression):
-    "运算符解析器，运算符的抽象类"
+    """运算符解析器，运算符的抽象类"""
 
     def __init__(self, left, right):
         self._left = left
@@ -34,7 +34,7 @@ class SymbolExpression(Expression):
 
 
 class AddExpression(SymbolExpression):
-    "加法解析器"
+    """加法解析器"""
 
     def __init__(self, left, right):
         super().__init__(left, right)
@@ -44,7 +44,7 @@ class AddExpression(SymbolExpression):
 
 
 class SubExpression(SymbolExpression):
-    "减法解析器"
+    """减法解析器"""
 
     def __init__(self, left, right):
         super().__init__(left, right)
@@ -52,9 +52,33 @@ class SubExpression(SymbolExpression):
     def interpreter(self, var):
         return self._left.interpreter(var) - self._right.interpreter(var)
 
-# import stack
+
+
+class Stack:
+    """封装一个堆栈类"""
+
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        if not self.isEmpty():
+            return self.items[len(self.items) - 1]
+
+    def size(self):
+        return len(self.items)
+
+
 class Calculator:
-    "计算器类"
+    """计算器类"""
 
     def __init__(self, text):
         self.__expression = self.parserText(text)
@@ -84,27 +108,7 @@ class Calculator:
         return self.__expression.interpreter(var)
 
 
-class Stack:
-    "封装一个堆栈类"
 
-    def __init__(self):
-        self.items = []
-
-    def isEmpty(self):
-        return len(self.items) == 0
-
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        return self.items.pop()
-
-    def peek(self):
-        if not self.isEmpty():
-            return self.items[len(self.items) - 1]
-
-    def size(self):
-        return len(self.items)
 
 
 # Version 2.0
