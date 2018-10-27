@@ -31,7 +31,7 @@ class Filter(metaclass=ABCMeta):
 
 
 class FilterChain(Filter):
-    "过滤器链"
+    """过滤器链"""
 
     def __init__(self):
         self._filters = []
@@ -43,10 +43,8 @@ class FilterChain(Filter):
         self._filters.remove(filter)
 
     def doFilter(self, elements):
-        newElements = []
         for filter in self._filters:
             elements = filter.doFilter(elements)
-            # newElements.append(elements)
         return elements
 
 
@@ -88,7 +86,7 @@ class SensitiveFilter(Filter):
 
 
 class HtmlFilter(Filter):
-    "HTML特殊字符转换"
+    """HTML特殊字符转换"""
 
     def __init__(self):
         self.__wordMap = {
@@ -123,7 +121,7 @@ def testFilterScreen():
 def testFilter():
     rawMaterials = ["豆浆", "豆渣"]
     print("过滤前：", rawMaterials)
-    filteredMaterials = list(filter(isSoybeanMilk, rawMaterials))
+    filteredMaterials = list(filter(lambda material: material == "豆浆", rawMaterials))
     print("过滤后：", filteredMaterials)
 
 def isSoybeanMilk(material):
