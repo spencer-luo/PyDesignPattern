@@ -5,7 +5,7 @@
 # Version 1.0
 #=======================================================================================================================
 # class PowerBank:
-#     "移动电源"
+#     """移动电源"""
 #
 #     def __init__(self, serialNum, electricQuantity):
 #         self.__serialNum = serialNum
@@ -25,11 +25,12 @@
 #         return self.__user
 #
 #     def showInfo(self):
-#         print("序列号:" + str(self.__serialNum) + "  电量:" + str(self.__electricQuantity) + "%  使用者:" + self.__user)
+#         print("序列号:%s 电量:%d%%  使用者:%s" % (self.__serialNum, self.__electricQuantity, self.__user) )
 
 
 class ObjectPack:
-    "对象的包装类，封装指定的对象(如充电宝)是否被使用中"
+    """对象的包装类
+    封装指定的对象(如充电宝)是否被使用中"""
     def __init__(self, obj, inUsing = False):
         self.__obj = obj
         self.__inUsing = inUsing
@@ -43,8 +44,9 @@ class ObjectPack:
     def getObj(self):
         return self.__obj
 
+
 class PowerBankBox:
-    "存放移动电源的智能箱盒"
+    """存放移动电源的智能箱盒"""
 
     def __init__(self):
         self.__pools = {}
@@ -52,7 +54,7 @@ class PowerBankBox:
         self.__pools["0002"] = ObjectPack(PowerBank("0002", 100))
 
     def borrow(self, serialNum):
-        "使用移动电源"
+        """借用移动电源"""
         item = self.__pools.get(serialNum)
         result = None
         if(item is None):
@@ -61,15 +63,16 @@ class PowerBankBox:
             item.setUsing(True)
             result = item.getObj()
         else:
-            print(str(serialNum) + "电源已被借用！")
+            print("%s电源 已被借用！" % serialNum)
         return result
 
     def giveBack(self, serialNum):
-        "归还移动电源"
+        """归还移动电源"""
         item = self.__pools.get(serialNum)
         if(item is not None):
             item.setUsing(False)
-            print(str(serialNum) + "电源已归还!")
+            print("%s电源 已归还!" % serialNum)
+
 
 # Version 2.0
 #=======================================================================================================================
@@ -81,9 +84,11 @@ import logging
 # 引入logging模块用于输出日志信息
 import time
 # 引入时间模块
+logging.basicConfig(level=logging.INFO)
+# 如果想在控制台打印INFO以上的信息，则加上此配制
 
 class PooledObject:
-    "池对象,也称池化对象"
+    """池对象,也称池化对象"""
 
     def __init__(self, obj):
         self.__obj = obj
@@ -103,11 +108,11 @@ class PooledObject:
 
 
 class ObjectPool(metaclass=ABCMeta):
-    "对象池"
+    """对象池"""
 
-    "对象池初始化大小"
+    """对象池初始化大小"""
     InitialNumOfObjects = 10
-    "对象池最大的大小"
+    """对象池最大的大小"""
     MaxNumOfObjects = 50
 
     def __init__(self):
@@ -118,48 +123,53 @@ class ObjectPool(metaclass=ABCMeta):
 
     @abstractmethod
     def createPooledObject(self):
-        "子类提供创建对象的方法"
+        """创建池对象, 由子类实现该方法"""
         pass
 
     def borrowObject(self):
+        """借用对象"""
         # 如果找到空闲对象，直接返回
         obj = self._findFreeObject()
         if(obj is not None):
-            logging.info("%s对象已被借用, time:%d", id(obj), time.time())
+            logging.info("%x对象已被借用, time:%s", id(obj),
+                         time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())) )
             return obj
-
         # 如果对象池未满，则添加新的对象
         if(len(self.__pools) < ObjectPool.MaxNumOfObjects):
             pooledObj = self.addObject()
             if (pooledObj is not None):
                 pooledObj.setBusy(True)
-                logging.info("%s对象已被借用, time:%d", id(pooledObj.getObject()), time.time())
+                logging.info("%x对象已被借用, time:%s", id(obj),
+                             time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
                 return pooledObj.getObject()
-
         # 对象池已满且没有空闲对象，则返回None
         return None
 
     def returnObject(self, obj):
+        """归还对象"""
         for pooledObj in self.__pools:
             if(pooledObj.getObject() == obj):
                 pooledObj.setBusy(False)
-                logging.info("%s对象已归还, time:%d", id(pooledObj.getObject()), time.time())
+                logging.info("%x对象已归还, time:%s", id(obj),
+                             time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
                 break
 
-
     def addObject(self):
+        """添加新对象"""
         obj = None
         if(len(self.__pools) < ObjectPool.MaxNumOfObjects):
             obj = self.createPooledObject()
             self.__pools.append(obj)
-            logging.info("添加新对象%s, time:%d", id(obj), time.time())
+            logging.info("添加新对象%x, time:", id(obj),
+                         time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
         return obj
 
     def clear(self):
+        """清空对象池"""
         self.__pools.clear()
 
     def _findFreeObject(self):
-        "查找空闲的对象"
+        """查找空闲的对象"""
         obj = None
         for pooledObj in self.__pools:
             if(not pooledObj.isBusy()):
@@ -169,11 +179,10 @@ class ObjectPool(metaclass=ABCMeta):
         return obj
 
 
-
 # 基于框架的实现
 #==============================
 class PowerBank:
-    "移动电源"
+    """移动电源"""
 
     def __init__(self, serialNum, electricQuantity):
         self.__serialNum = serialNum
@@ -196,6 +205,7 @@ class PowerBank:
         print("序列号:%03d  电量:%d%%  使用者:%s" % (self.__serialNum, self.__electricQuantity, self.__user))
 
 class PowerBankPool(ObjectPool):
+    """存放移动电源的智能箱盒"""
 
     __serialNum = 0
 
