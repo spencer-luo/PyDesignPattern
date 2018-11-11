@@ -21,7 +21,9 @@ class Animal(metaclass=ABCMeta):
 
     @abstractmethod
     def checkFood(self, food):
+        """检查哪种食物能吃"""
         pass
+
 
 class Dog(Animal):
     """狗"""
@@ -32,6 +34,7 @@ class Dog(Animal):
     def checkFood(self, food):
         return food.category() == "肉类"
 
+
 class Swallow(Animal):
     """燕子"""
 
@@ -40,6 +43,7 @@ class Swallow(Animal):
 
     def checkFood(self, food):
         return food.category() == "昆虫"
+
 
 class Food(metaclass=ABCMeta):
     """食物"""
@@ -63,6 +67,7 @@ class Food(metaclass=ABCMeta):
 
 class Meat(Food):
     """肉"""
+
     def __init__(self):
         super().__init__("肉")
 
@@ -75,6 +80,7 @@ class Meat(Food):
 
 class Worm(Food):
     """虫子"""
+
     def __init__(self):
         super().__init__("虫子")
 
@@ -83,6 +89,7 @@ class Worm(Food):
 
     def nutrient(self):
         return "蛋白质含、微量元素"
+
 
 def testFood():
     dog = Dog()

@@ -2,8 +2,8 @@
 # Authoer: Spencer.Luo
 # Date: 8/11/2018
 
-import os
-# 导入os库,用于文件、路径相关的解析
+# import os
+# # 导入os库,用于文件、路径相关的解析
 
 # def getPath(basePath, fileName):
 #     extName = os.path.splitext(fileName)[1]
@@ -21,6 +21,10 @@ import os
 #
 #     filePath += fileName
 #     return filePath
+
+
+import os
+# 导入os库,用于文件、路径相关的解析
 
 def getPath(basePath, fileName):
     extName = fileName.split(".")[1]

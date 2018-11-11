@@ -27,8 +27,26 @@ class TerrestrialAnimal(Animal):
     def moving(self):
         print(self._name + "在陆上跑...")
 
-    def checkFood(self, food):
-        food.category() == ""
+
+class AquaticAnimal(Animal):
+    """水生生物"""
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def moving(self):
+        print(self._name + "在水里游...")
+
+
+class BirdAnimal(Animal):
+    """鸟类动物"""
+
+    def __init__(self, name):
+        super().__init__(name)
+
+    def moving(self):
+        print(self._name + "在天空飞...")
+
 
 class Monkey(TerrestrialAnimal):
     """猴子"""
@@ -40,6 +58,7 @@ class Monkey(TerrestrialAnimal):
         print(self._name + "在爬树，动作灵活轻盈...")
 
 
+# 修改Zoo类，增加climbing方法：
 class Zoo:
     """动物园"""
 
@@ -58,23 +77,6 @@ class Zoo:
         monkey.climbing()
 
 
-class AquaticAnimal(Animal):
-    """水生生物"""
-
-    def __init__(self, name):
-        super().__init__(name)
-
-    def moving(self):
-        print(self._name + "在水里游...")
-
-class BirdAnimal(Animal):
-    """鸟类动物"""
-
-    def __init__(self, name):
-        super().__init__(name)
-
-    def moving(self):
-        print(self._name + "在天空飞...")
 
 
 def testZoo():
