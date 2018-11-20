@@ -119,15 +119,14 @@ def testPerson():
     "测试方法"
     tony = Person("Tony", 25, 1.77)
     tony.showInfo()
-    print();
+    print()
 
-    jenny = Teacher("Jenny", 34, 1.68);
-    jenny.setTitle("教授");
-    jenny.showInfo();
+    jenny = Teacher("Jenny", 34, 1.68)
+    jenny.setTitle("教授")
+    jenny.showInfo()
 
-testPerson()
 
-# testDataType()
+testDataType()
 # testList()
 # testTuple()
 # testDictionary()
