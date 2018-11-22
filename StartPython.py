@@ -24,27 +24,28 @@ def testDataType():
 def testList():
     list = ['Thomson', 78, 12.58, 'Sunny', 180.2]
     tinylist = [123, 'Tony']
-    print(list)  # 输出完整列表
-    print(list[0])  # 输出列表的第一个元素
-    print(list[1:3])  # 输出第二个至第三个元素
-    print(list[2:])  # 输出从第三个开始至列表末尾的所有元素
-    print(tinylist * 2)  # 输出列表两次
-    print(list + tinylist)  # 打印组合的列表
+    print("list:", list)  # 输出完整列表
+    print("list[0]:", list[0])  # 输出列表的第一个元素
+    print("list[1:3]:", list[1:3])  # 输出第二个至第三个元素
+    print("list[2:]:", list[2:])  # 输出从第三个开始至列表末尾的所有元素
+    print("tinylist * 2 :", tinylist * 2)  # 输出列表两次
+    print("list + tinylist :", list + tinylist)  # 打印组合的列表
     list[1] = 100
-    print(list)  # 输出完整列表
+    print("设置list[1]:", list)  # 输出完整列表
     list.append("added data")
-    print(list)  # 输出增加后的列表
+    print("list添加元素:", list)  # 输出增加后的列表
 
 
 def testTuple():
     tuple = ('Thomson', 78, 12.58, 'Sunny', 180.2)
     tinytuple = (123, 'Tony')
-    print(tuple)  # 输出完整元组
-    print(tuple[0])  # 输出元组的第一个元素
-    print(tuple[1:3])  # 输出第二个至第三个的元素
-    print(tuple[2:])  # 输出从第三个开始至列表末尾的所有元素
-    print(tinytuple * 2)  # 输出元组两次
-    print(tuple + tinytuple)  # 打印组合的元组
+    print("tuple:", tuple)  # 输出完整元组
+    print("tinytuple:", tinytuple)  # 输出完整元组
+    print("tuple[0]:", tuple[0])  # 输出元组的第一个元素
+    print("tuple[1:3]:", tuple[1:3])  # 输出第二个至第三个的元素
+    print("tuple[2:]:", tuple[2:])  # 输出从第三个开始至列表末尾的所有元素
+    print("tinytuple * 2:", tinytuple * 2)  # 输出元组两次
+    print("tuple + tinytuple:", tuple + tinytuple)  # 打印组合的元组
     # tuple[1] = 100 # 不能修改元组内的元素
 
 
@@ -54,11 +55,11 @@ def testDictionary():
     dict[2] = "This is two"
     tinydict = {'name': 'Tony', 'age': 24, 'height': 177}
 
-    print(dict['one'])  # 输出键为'one' 的值
-    print(dict[2])  # 输出键为 2 的值
-    print(tinydict) # 输出完整的字典
-    print(tinydict.keys())  # 输出所有键
-    print(tinydict.values())  # 输出所有值
+    print("tinydict:", tinydict) # 输出完整的字典
+    print("tinydict.keys():", tinydict.keys())  # 输出所有键
+    print("tinydict.values():", tinydict.values())  # 输出所有值
+    print("dict['one']:", dict['one'])  # 输出键为'one' 的值
+    print("dict[2]:", dict[2])  # 输出键为 2 的值
 
 
 class Test:
@@ -126,10 +127,10 @@ def testPerson():
     jenny.showInfo()
 
 
-testDataType()
+# testDataType()
 # testList()
 # testTuple()
 # testDictionary()
 # testClass()
 
-# testPerson()
+testPerson()
