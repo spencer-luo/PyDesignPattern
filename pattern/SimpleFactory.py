@@ -123,21 +123,23 @@ class PenFactory:
 
     def getSingleObj(self, penType, name):
         """获得唯一实例的对象"""
-        if (self.__pens.get(penType) is None):
-            # 如果该对象不存在，则创建一个对象并存到字典中
-            self.__pens[penType] = LinePen(name)
-        # 否则直接返回字典中的对象
-        return self.__pens[penType]
+
 
     def createPen(self, penType):
         """创建画笔"""
-        # Python中没有switch/case的语法，我们通过字典来来模拟switch/case的实现方式
-        switcher = {
-            PenType.PenTypeLine : self.getSingleObj(PenType.PenTypeLine, "直线画笔"),
-            PenType.PenTypeRect : self.getSingleObj(PenType.PenTypeRect, "矩形画笔"),
-            PenType.PenTypeEllipse : self.getSingleObj(PenType.PenTypeEllipse, "椭圆画笔"),
-        }
-        return switcher.get(penType, Exception("创建对象失败"))
+        if (self.__pens.get(penType) is None):
+            # 如果该对象不存在，则创建一个对象并存到字典中
+            if penType == PenType.PenTypeLine:
+                pen = LinePen("直线画笔")
+            elif penType == PenType.PenTypeRect:
+                pen = RectanglePen("矩形画笔")
+            elif penType == PenType.PenTypeEllipse:
+                pen = EllipsePen("椭圆画笔")
+            else:
+                pen = Pen("")
+            self.__pens[penType] = pen
+        # 否则直接返回字典中的对象
+        return self.__pens[penType]
 
 
 # 基于框架的实现
@@ -156,13 +158,13 @@ def testCoffeeMaker():
 def testPenFactory():
     factory = PenFactory()
     linePen = factory.createPen(PenType.PenTypeLine)
-    print("创建了 %s，对象id：%s" % (linePen.getName(), id(linePen)) )
+    print("创建了 %s，对象id：%s， 类型：%s" % (linePen.getName(), id(linePen), linePen.getType()) )
     rectPen = factory.createPen(PenType.PenTypeRect)
-    print("创建了 %s，对象id：%s" % (rectPen.getName(), id(rectPen)))
+    print("创建了 %s，对象id：%s， 类型：%s" % (rectPen.getName(), id(rectPen), rectPen.getType()) )
     rectPen2 = factory.createPen(PenType.PenTypeRect)
-    print("创建了 %s，对象id：%s" % (rectPen2.getName(), id(rectPen2)))
+    print("创建了 %s，对象id：%s， 类型：%s" % (rectPen2.getName(), id(rectPen2), rectPen2.getType()) )
     ellipsePen = factory.createPen(PenType.PenTypeEllipse)
-    print("创建了 %s，对象id：%s" % (ellipsePen.getName(), id(ellipsePen)))
+    print("创建了 %s，对象id：%s， 类型：%s" % (ellipsePen.getName(), id(ellipsePen), ellipsePen.getType()) )
 
 
 # testCoffeeMaker()
