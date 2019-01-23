@@ -162,14 +162,17 @@ class BritishSocket:
     def socketInterface(self):
         return SocketEntity(3, "T字方型")
 
-class AdapterSocket(BritishSocket, ISocket):
+class AdapterSocket(ISocket):
     """插座转换器"""
 
+    def __init__(self, britishSocket):
+        self.__britishSocket = britishSocket
+
     def getName(self):
-        return  "英标插座转换器"
+        return  self.__britishSocket.name() + "转换器"
 
     def getSocket(self):
-        socket = super().socketInterface()
+        socket = self.__britishSocket.socketInterface()
         socket.setTypeOfPin("八字扁型")
         return socket
 
@@ -196,11 +199,15 @@ class Adaptee:
     def speciaficFunction(self):
         print("被适配对象的特殊功能")
 
-class Adapter(Adaptee, Target):
+class Adapter(Target):
     """适配器"""
+
+    def __init__(self, adaptee):
+        self.__adaptee = adaptee
 
     def function(self):
         print("进行功能的转换")
+        self.__adaptee.speciaficFunction()
 
 
 
@@ -334,12 +341,16 @@ class ThirdPdf:
 
     def __init__(self):
         self.__pageSize = 0
+        self.__title = ""
 
     def open(self, filePath):
         print("第三方库解析PDF文件：" + filePath)
-        self._title = os.path.splitext(filePath)[0]
+        self.__title = os.path.splitext(filePath)[0]
         self.__pageSize = 1000
         return True
+
+    def getTitle(self):
+        return self.__title
 
     def getOutline(self):
         outline = Outline()
@@ -353,12 +364,16 @@ class ThirdPdf:
     def page(self, index):
         return PdfPage(index)
 
+
 class PdfAdapterBook(ThirdPdf, IBook):
     """对第三方的PDF解析库重新进行包装"""
 
+    def __init__(self, thirdPdf):
+        self.__thirdPdf = thirdPdf
+
     def parseFile(self, filePath):
         # 模拟文档的解析
-        rtn = super().open(filePath)
+        rtn = self.__thirdPdf.open(filePath)
         if(rtn):
             print(filePath + "文件解析成功")
         return rtn
@@ -366,13 +381,13 @@ class PdfAdapterBook(ThirdPdf, IBook):
     def getCatalogue(self):
         outline = self.getOutline()
         print("将Outline结构的目录转换成Catalogue结构的目录")
-        catalogue = Catalogue(self._title)
+        catalogue = Catalogue(self.__thirdPdf.getTitle())
         for title in outline.getOutlines():
             catalogue.addChapter(title)
         return catalogue
 
     def getPageCount(self):
-        return super().pageSize()
+        return self.__thirdPdf.pageSize()
 
     def getPage(self, pageNum):
         page = self.page(pageNum)
@@ -397,7 +412,7 @@ class Reader:
         elif(extName.lower() == ".txt"):
             self.__curBook = TxtBook()
         elif(extName.lower() == ".pdf"):
-            self.__curBook = PdfAdapterBook()
+            self.__curBook = PdfAdapterBook(ThirdPdf())
         else:
             self.__curBook = None
 
@@ -453,7 +468,7 @@ def testPerson():
     # hotel.recruit(demi)
 
 def testAdapter():
-    adpater = Adapter()
+    adpater = Adapter(Adaptee())
     adpater.function()
 
 def testReader():
@@ -502,11 +517,11 @@ def testSocket():
     britishSocket = BritishSocket()
     canChargeforDigtalDevice(britishSocket.name(), britishSocket.socketInterface())
 
-    adapterSocket = AdapterSocket()
+    adapterSocket = AdapterSocket(britishSocket)
     canChargeforDigtalDevice(adapterSocket.getName(), adapterSocket.getSocket())
 
 
 # testPerson()
 # testAdapter()
-# testReader()
-testSocket()
+testReader()
+# testSocket()
