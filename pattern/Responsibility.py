@@ -145,8 +145,17 @@ class Responsible(metaclass=ABCMeta):
     def getNextHandler(self):
         return self._nextHandler
 
-    @abstractmethod
     def handleRequest(self, request):
+        """请求处理"""
+        # 当前责任人处理请求
+        self._handleRequestImpl(request)
+        # 如果存在下一个责任人，则将请求传递(提交)给下一个责任人
+        if (self._nextHandler is not None):
+            self._nextHandler.handleRequest(request)
+
+    @abstractmethod
+    def _handleRequestImpl(self, request):
+        """真正处理请求的方法"""
         pass
 
 
@@ -183,11 +192,9 @@ class Supervisor(Responsible):
     def __init__(self, name, title):
         super().__init__(name, title)
 
-    def handleRequest(self, request):
+    def _handleRequestImpl(self, request):
         if (request.getDayOff() <= 2):
             print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
-        if (self._nextHandler is not None):
-            self._nextHandler.handleRequest(request)
 
 
 class DepartmentManager(Responsible):
@@ -196,11 +203,9 @@ class DepartmentManager(Responsible):
     def __init__(self, name, title):
         super().__init__(name, title)
 
-    def handleRequest(self, request):
+    def _handleRequestImpl(self, request):
         if (request.getDayOff() > 2 and request.getDayOff() <= 5):
             print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
-        if (self._nextHandler is not None):
-            self._nextHandler.handleRequest(request)
 
 
 class CEO(Responsible):
@@ -209,11 +214,9 @@ class CEO(Responsible):
     def __init__(self, name, title):
         super().__init__(name, title)
 
-    def handleRequest(self, request):
+    def _handleRequestImpl(self, request):
         if (request.getDayOff() > 5 and request.getDayOff() <= 22):
             print("同意 %s 请假，签字人：%s(%s)" % (request.getName(), self.getName(), self.getTitle()))
-        if (self._nextHandler is not None):
-            self._nextHandler.handleRequest(request)
 
 
 class Administrator(Responsible):
@@ -222,7 +225,7 @@ class Administrator(Responsible):
     def __init__(self, name, title):
         super().__init__(name, title)
 
-    def handleRequest(self, request):
+    def _handleRequestImpl(self, request):
         print("%s 的请假申请已审核，情况属实！已备案处理。处理人：%s(%s)\n" % (request.getName(), self.getName(), self.getTitle()))
 
 # Test
