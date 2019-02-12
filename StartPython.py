@@ -81,9 +81,9 @@ class Person:
     visited = 0
 
     def __init__(self, name, age, height):
-        self.__name = name
-        self._age = age
-        self.height = height
+        self.__name = name      # 私有成员，访问权限为private
+        self._age = age         # 保护成员，访问权限为protected
+        self.height = height    # 公有成员，访问权限为public
 
     def getName(self):
         return self.__name
