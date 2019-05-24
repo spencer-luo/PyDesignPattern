@@ -14,7 +14,7 @@ This is the source ocde of [ *How to comprehend Design Patterns from daily life*
 
 ## 书籍
 [京东购买](https://item.jd.com/12580392.html)、[当当购买](http://product.dangdang.com/27848931.html)
-[书籍介绍]()
+[书籍介绍](./docs/EverybodyKnowsDesgnPatterns.jpg)
 
 ## 线上课程
 
