@@ -12,6 +12,11 @@ This is the source ocde of [ *How to comprehend Design Patterns from daily life*
 
 此升级版的系列分三部分内容：(1). 基础篇，19种常用设计模式单独章节讲解 + 剩余4种模式合集(会有1到2篇的篇幅)；(2). 进阶篇，是基础设计模式的衍生，也是各大编程语言中非常重要而常见的种编程机制；(3). 经验篇，将会分享我对设计原则、设计模式、项目重构的经验和看法。
 
+## 书籍
+[京东购买](https://item.jd.com/12580392.html)、[当当购买](http://product.dangdang.com/27848931.html)
+[书籍介绍]()
+
+## 线上课程
 
 ### 引导篇
 [生活中的设计模式——启程之前，请不要错过我【试读】](http://gitbook.cn/gitchat/column/5a1c24de28554541fbc8f2e8/topic/5a1f8857211fa435d2b9ca6c)
