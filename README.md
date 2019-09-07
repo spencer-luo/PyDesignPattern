@@ -4,7 +4,7 @@
 This is the source ocde of [ *How to comprehend Design Patterns from daily life* ](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3).
 
 ## 中文
-[如何从生活中领悟设计模式（Python）](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3)
+这是《人人都懂设计模式：从生活中领悟设计模式（Python实现）》一书的源码。可通过线上课程[如何从生活中领悟设计模式（Python）](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3) 进行试读。
 
 设计模式(Design pattern)是一套被反复使用、多数人知晓的、无数工程师实践的代码设计经验的总结，它是面向对象思想的高度提炼和模板化。使用设计模式将会使你的代码具有更高的可重用性，更好的灵活性和可拓展性，更易被人阅读和理解。
 
