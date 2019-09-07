@@ -1,7 +1,7 @@
 # Description of PyDesignPattern
 
 ## English
-This is the source ocde of [ *How to comprehend Design Patterns from daily life* ](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3).
+This is the source ocde of [ *Everybody Know Design Patterns : How to comprehend Design Patterns from daily life* ](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3).
 
 ## 中文
 这是《人人都懂设计模式：从生活中领悟设计模式（Python实现）》一书的源码。可通过线上课程[如何从生活中领悟设计模式（Python）](https://gitbook.cn/gitchat/column/5b26040ac81ac568fcf64ea3) 进行试读。
