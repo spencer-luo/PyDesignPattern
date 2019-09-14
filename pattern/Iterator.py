@@ -226,7 +226,7 @@ def testIsIterator():
     print(isinstance([], Iterator))
     print(isinstance({}, Iterator))
     print(isinstance((1, 2, 3), Iterator))
-    print(isinstance(set([1, 2, 3]), Iterable))
+    print(isinstance(set([1, 2, 3]), Iterator))
     print(isinstance("string", Iterator))
     print(isinstance(gen, Iterator))
     print(isinstance(fibonacci(10), Iterator))
@@ -278,10 +278,10 @@ def testNumberSequence():
 
 
 # testHospital()
-testBaseIterator()
+# testBaseIterator()
 # testLoop()
 # testIterable()
-# testIsIterator()
+testIsIterator()
 # testNextItem()
 # testNumberSequence()
 

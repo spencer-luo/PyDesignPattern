@@ -7,10 +7,13 @@
 def testDataType():
     age = 18        # int
     weight = 62.51  # float
-    name = "Tony"  # string
-    print("age:", age)
-    print("weight:", weight)
-    print("name:", name)
+    isAdult = True  # bool，只有True和False两个枚举值
+    name = "Tony"   # string
+    print("age:", age, " type:", type(age))
+    print("weight:", weight, " type:", type(weight))
+    print("isAdult:", isAdult, " type:", type(isAdult))
+    print("name:", name, " type:", type(name))
+
     # 变量的类型可以直接改变
     age = name
     print("age:", age)
@@ -61,6 +64,15 @@ def testDictionary():
     print("dict['one']:", dict['one'])  # 输出键为'one' 的值
     print("dict[2]:", dict[2])  # 输出键为 2 的值
 
+def testSet():
+    friuts = {"apple", "orange", "strawberry", "banana", "apple", "strawberry"}
+    print("friuts:", friuts)
+    print("type of friuts:", type(friuts))
+    arr = [1, 2, 3, 4, 5, 1]
+    numbers = set(arr)
+    print("numbers:", numbers)
+    friuts.add(1)
+    print("numbers add 1:", numbers)
 
 class Test:
     "这是一个测试类"
@@ -131,6 +143,7 @@ def testPerson():
 # testList()
 # testTuple()
 # testDictionary()
+testSet()
 # testClass()
 
-testPerson()
+# testPerson()
