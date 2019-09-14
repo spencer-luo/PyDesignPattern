@@ -25,44 +25,46 @@ def testDataType():
 
 
 def testList():
-    list = ['Thomson', 78, 12.58, 'Sunny', 180.2]
-    tinylist = [123, 'Tony']
-    print("list:", list)  # 输出完整列表
-    print("list[0]:", list[0])  # 输出列表的第一个元素
-    print("list[1:3]:", list[1:3])  # 输出第二个至第三个元素
-    print("list[2:]:", list[2:])  # 输出从第三个开始至列表末尾的所有元素
-    print("tinylist * 2 :", tinylist * 2)  # 输出列表两次
-    print("list + tinylist :", list + tinylist)  # 打印组合的列表
-    list[1] = 100
-    print("设置list[1]:", list)  # 输出完整列表
-    list.append("added data")
-    print("list添加元素:", list)  # 输出增加后的列表
+    list1 = ['Thomson', 78, 12.58, 'Sunny', 180.2]
+    list2 = [123, 'Tony']
+    print("list1:", list1)  # 输出完整列表
+    print("list1[0]:", list1[0])  # 输出列表的第一个元素
+    print("list1[1:3]:", list1[1:3])  # 输出第二个至第三个元素
+    print("list1[2:]:", list1[2:])  # 输出从第三个开始至列表末尾的所有元素
+    print("list2 * 2 :", list2 * 2)  # 输出列表两次
+    print("list1 + list2 :", list1 + list2)  # 打印组合的列表
+    list1[1] = 100
+    print("设置list[1]:", list1)  # 输出完整列表
+    list1.append("added data")
+    print("list添加元素:", list1)  # 输出增加后的列表
 
 
 def testTuple():
-    tuple = ('Thomson', 78, 12.58, 'Sunny', 180.2)
-    tinytuple = (123, 'Tony')
-    print("tuple:", tuple)  # 输出完整元组
-    print("tinytuple:", tinytuple)  # 输出完整元组
-    print("tuple[0]:", tuple[0])  # 输出元组的第一个元素
-    print("tuple[1:3]:", tuple[1:3])  # 输出第二个至第三个的元素
-    print("tuple[2:]:", tuple[2:])  # 输出从第三个开始至列表末尾的所有元素
-    print("tinytuple * 2:", tinytuple * 2)  # 输出元组两次
-    print("tuple + tinytuple:", tuple + tinytuple)  # 打印组合的元组
-    # tuple[1] = 100 # 不能修改元组内的元素
+    tp1 = ('Thomson', 78, 12.58, 'Sunny', 180.2)
+    tp2 = (123, 'Tony')
+    print("tp1:", tp1)  # 输出完整元组
+    print("tp2:", tp2)  # 输出完整元组
+    print("tp1[0]:", tp1[0])  # 输出元组的第一个元素
+    print("tp1[1:3]:", tp1[1:3])  # 输出第二个至第三个的元素
+    print("tp1[2:]:", tp1[2:])  # 输出从第三个开始至列表末尾的所有元素
+    print("tp2 * 2:", tp2 * 2)  # 输出元组两次
+    print("tp1 + tp2:", tp1 + tp2)  # 打印组合的元组
+    # tp1[1] = 100 # 不能修改元组内的元素
 
 
 def testDictionary():
-    dict = {}
-    dict['one'] = "This is one"
-    dict[2] = "This is two"
-    tinydict = {'name': 'Tony', 'age': 24, 'height': 177}
+    dict1 = {}
+    dict1['one'] = "This is one"
+    dict1[2] = "This is two"
+    dict2 = {'name': 'Tony', 'age': 24, 'height': 177}
 
-    print("tinydict:", tinydict) # 输出完整的字典
-    print("tinydict.keys():", tinydict.keys())  # 输出所有键
-    print("tinydict.values():", tinydict.values())  # 输出所有值
-    print("dict['one']:", dict['one'])  # 输出键为'one' 的值
-    print("dict[2]:", dict[2])  # 输出键为 2 的值
+    print("dict1:", dict1)
+    print("dict1['one']:", dict1['one'])  # 输出键为'one' 的值
+    print("dict1[2]:", dict1[2])  # 输出键为 2 的值
+    print("dict2:", dict2) # 输出完整的字典
+    print("dict2.keys():", dict2.keys())  # 输出所有键
+    print("dict2.values():", dict2.values())  # 输出所有值
+
 
 def testSet():
     friuts = {"apple", "orange", "strawberry", "banana", "apple", "strawberry"}
@@ -140,10 +142,10 @@ def testPerson():
 
 
 # testDataType()
-# testList()
+testList()
 # testTuple()
 # testDictionary()
-testSet()
+# testSet()
 # testClass()
 
 # testPerson()
